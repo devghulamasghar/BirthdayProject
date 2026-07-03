@@ -77,6 +77,9 @@ function showLetterPage() {
             </div>
             <div class="letter-body">
                 <div id="letterContent"></div>
+                <div class="letter-back-wrap">
+                    <button class="letter-back-btn" onclick="Scenes.show('cakeScreen')">Continue to Cake 🎂</button>
+                </div>
             </div>
         </div>
     `;
@@ -108,11 +111,13 @@ function typeLetter() {
 
         i++;
 
-        // Auto scroll as text appears
         content.parentElement.scrollTop = content.parentElement.scrollHeight;
 
         if (i >= LETTER.length) {
             clearInterval(timer);
+            // Show cake button
+            const btn = letterScreen.querySelector(".letter-back-wrap");
+            if (btn) gsap.fromTo(btn, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.6 });
         }
 
     }, 22);
