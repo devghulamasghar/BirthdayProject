@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Project Aurora | Happy Birthday Rudaba ❤️</title>
+
+    <!-- ========================= -->
+    <!-- Google Fonts -->
+    <!-- ========================= -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- ========================= -->
+    <!-- CSS -->
+    <!-- ========================= -->
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/loading.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/screens.css">
+    <link rel="stylesheet" href="css/galaxy.css">
+    <link rel="stylesheet" href="css/responsive.css">
+
+</head>
+
+<body>
+
+    <!-- ========================= -->
+    <!-- GALAXY CANVAS -->
+    <!-- ========================= -->
+
+    <canvas id="galaxyCanvas"></canvas>
+
+    <!-- Global Nav Buttons -->
+    <div id="globalNav">
+        <button id="globalBackBtn" onclick="Scenes.back()" title="Go back">&#8592;</button>
+        <button id="globalHomeBtn" onclick="Scenes.backToStart()" title="Back to start">&#8962;</button>
+    </div>
+
+    <!-- ========================= -->
+    <!-- LOADING SCREEN -->
+    <!-- ========================= -->
+
+    <section id="loadingScreen" class="screen active">
+
+        <div class="load-particles" id="loadParticles"></div>
+
+        <div class="load-rings">
+            <div class="load-ring"></div>
+            <div class="load-ring"></div>
+            <div class="load-ring"></div>
+        </div>
+
+        <div class="loading-content">
+
+            <div class="load-cake">
+                <div class="load-cake-top">
+                    <div class="load-candle"><div class="load-flame"></div></div>
+                    <div class="load-candle"><div class="load-flame"></div></div>
+                    <div class="load-candle"><div class="load-flame"></div></div>
+                    <div class="load-candle"><div class="load-flame"></div></div>
+                    <div class="load-candle"><div class="load-flame"></div></div>
+                </div>
+                <div class="load-cake-mid"></div>
+                <div class="load-cake-base"></div>
+                <div class="load-cake-plate"></div>
+            </div>
+
+            <h1>Happy Birthday</h1>
+
+            <p class="load-name">Rudaba 🌸</p>
+
+            <p class="load-sub">Something special is loading for you...</p>
+
+            <div class="load-bar-wrap">
+                <div class="load-bar" id="loadBar"></div>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ========================= -->
+    <!-- NAME SCREEN -->
+    <!-- ========================= -->
+
+    <section id="nameScreen" class="screen">
+
+        <div class="name-floaties">
+            <span style="--d:0s;  --x:8%;  --y:15%">🎂</span>
+            <span style="--d:.6s; --x:88%; --y:10%">🎁</span>
+            <span style="--d:1.2s;--x:5%;  --y:75%">🌸</span>
+            <span style="--d:.3s; --x:90%; --y:70%">✨</span>
+            <span style="--d:.9s; --x:50%; --y:5%" >🎈</span>
+            <span style="--d:1.5s;--x:20%; --y:88%">🎀</span>
+            <span style="--d:.5s; --x:75%; --y:85%">🌙</span>
+            <span style="--d:1.8s;--x:40%; --y:92%">⭐</span>
+        </div>
+
+        <div class="name-card">
+
+            <div class="name-cake">
+                <div class="cake-body">
+                    <div class="cake-candle"><div class="cake-flame"></div></div>
+                    <div class="cake-candle"><div class="cake-flame"></div></div>
+                    <div class="cake-candle"><div class="cake-flame"></div></div>
+                </div>
+                <div class="cake-base"></div>
+            </div>
+
+            <h2 class="name-title">Welcome ✨</h2>
+
+            <p class="name-subtitle">Before we begin this little journey...</p>
+
+            <div class="name-input-wrap">
+                <span class="name-input-icon">🌸</span>
+                <input id="nameInput" type="text" placeholder="Enter your beautiful name">
+            </div>
+
+            <button id="continueBtn">Let's Begin 🎉</button>
+
+            <p class="name-hint">A surprise is waiting for you ✨</p>
+
+        </div>
+
+    </section>
+
+    <!-- ========================= -->
+    <!-- MUSIC SCREEN -->
+    <!-- ========================= -->
+
+    <section id="musicScreen" class="screen">
+
+        <div class="music-screen-wrap">
+
+            <h2 class="music-title">Choose Your Vibe 🎵</h2>
+
+            <p class="music-subtitle">Pick a song to play while you explore...</p>
+
+            <div class="music-cards">
+
+                <div class="music-card" data-song="audio/birthday_song.mp3">
+                    <div class="music-card-icon">🎂</div>
+                    <div class="music-card-info">
+                        <span class="music-card-title">Birthday Song</span>
+                        <span class="music-card-desc">Warm & celebratory</span>
+                    </div>
+                    <div class="music-card-wave">
+                        <span></span><span></span><span></span><span></span><span></span>
+                    </div>
+                </div>
+
+                <div class="music-card" id="myChoiceCard">
+                    <div class="music-card-icon">💝</div>
+                    <div class="music-card-info">
+                        <span class="music-card-title">My Choice For You</span>
+                        <span class="music-card-desc">Picked with love • tap to see</span>
+                    </div>
+                    <div class="music-card-wave">
+                        <span></span><span></span><span></span><span></span><span></span>
+                    </div>
+                    <span class="my-choice-arrow">❯</span>
+                </div>
+
+                <!-- Sub song list -->
+                <div class="my-choice-list" id="myChoiceList">
+
+                    <div class="song-item" data-song="audio/tere_bin.mp3">
+                        <span class="song-item-wave">
+                            <span></span><span></span><span></span>
+                        </span>
+                        <span class="song-item-name">Tere Bin</span>
+                        <span class="song-item-hint">play</span>
+                    </div>
+
+                    <div class="song-item" data-song="audio/sadi_sun.mp3">
+                        <span class="song-item-wave">
+                            <span></span><span></span><span></span>
+                        </span>
+                        <span class="song-item-name">Sadi Sun</span>
+                        <span class="song-item-hint">play</span>
+                    </div>
+
+                    <button class="song-continue-btn" id="songContinueBtn" style="display:none">
+                        Continue →
+                    </button>
+
+                </div>
+
+                <div class="music-card music-card-silent" data-song="silent">
+                    <div class="music-card-icon">🔇</div>
+                    <div class="music-card-info">
+                        <span class="music-card-title">No Music</span>
+                        <span class="music-card-desc">Continue in silence</span>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ========================= -->
+    <!-- STORY SCREEN -->
+    <!-- ========================= -->
+
+    <section id="storyScreen" class="screen">
+
+        <div class="story-container">
+
+            <p id="storyText"></p>
+
+            <button id="storyNextBtn" style="display:none;">
+
+                Continue ✨
+
+            </button>
+
+        </div>
+
+    </section>
+
+    <!-- ========================= -->
+    <!-- MAGIC PORTAL + GALLERY -->
+    <!-- ========================= -->
+
+    <section id="galleryScreen" class="screen">
+
+        <div class="portal-container">
+
+            <div id="portal">
+
+                <div class="portal-ring"></div>
+
+                <div class="portal-ring ring2"></div>
+
+                <div class="portal-ring ring3"></div>
+
+                <div class="portal-core"></div>
+
+            </div>
+
+            <h2 class="portal-title">
+
+                A World Made For You
+
+            </h2>
+
+            <p>
+
+                Click the portal to enter...
+
+            </p>
+
+        </div>
+
+    </section>
+
+    <!-- ================================================= -->
+    <!-- LETTER SCREEN -->
+    <!-- ================================================= -->
+
+    <section id="letterScreen" class="screen">
+
+        <div class="letter-container">
+
+            <div id="envelope">
+
+                <div class="envelope-back"></div>
+
+                <div class="envelope-flap"></div>
+
+                <div class="wax-seal">
+                    ❤️
+                </div>
+
+                <div class="letter-paper">
+
+                    <div id="letterContent"></div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ========================= -->
+    <!-- APOLOGY SCREEN -->
+    <!-- ========================= -->
+
+    <section id="apologyScreen" class="screen">
+
+        <div class="letter-container">
+
+            <div id="apologyEnvelope">
+
+                <div class="envelope-back"></div>
+
+                <div class="envelope-flap"></div>
+
+                <div class="wax-seal">
+                    🤍
+                </div>
+
+                <div class="letter-paper">
+
+                    <div id="apologyContent"></div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ========================= -->
+    <!-- CAKE -->
+    <!-- ========================= -->
+
+    <section id="cakeScreen" class="screen"></section>
+
+    <!-- ========================= -->
+    <!-- FIREWORKS -->
+    <!-- ========================= -->
+
+    <section id="fireworksScreen" class="screen"></section>
+
+    <!-- ========================= -->
+    <!-- END -->
+    <!-- ========================= -->
+
+    <section id="endingScreen" class="screen"></section>
+
+    <!-- ========================= -->
+    <!-- AUDIO -->
+    <!-- ========================= -->
+
+    <audio id="bgMusic" loop></audio>
+
+    <audio id="clickSound"></audio>
+
+    <!-- ========================= -->
+    <!-- LIBRARIES -->
+    <!-- ========================= -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.7/gsap.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+    <!-- ========================= -->
+    <!-- JAVASCRIPT -->
+    <!-- ========================= -->
+
+    <script src="js/config.js"></script>
+
+    <script src="js/utils.js"></script>
+
+    <script src="js/sceneManager.js"></script>
+
+    <script src="js/app.js"></script>
+
+    <script src="js/loading.js"></script>
+
+    <script src="js/galaxy.js"></script>
+
+    <script src="js/music.js"></script>
+
+    <script src="js/gallery.js"></script>
+
+    <script src="js/typewriter.js"></script>
+
+    <script src="js/letter.js"></script>
+
+    <script src="js/apology.js"></script>
+
+    <script src="js/cake.js"></script>
+
+    <script src="js/fireworks.js"></script>
+
+    <script src="js/starsText.js"></script>
+
+</body>
+
+</html>

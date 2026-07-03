@@ -1,0 +1,333 @@
+/* ==========================================================
+   PROJECT AURORA
+   Galaxy Engine Styles
+========================================================== */
+
+/* ===========================
+   GALAXY CANVAS
+=========================== */
+
+#galaxyCanvas{
+
+    position:fixed;
+
+    top:0;
+    left:0;
+
+    width:100%;
+    height:100%;
+
+    z-index:-20;
+
+    display:block;
+
+    background:#020617;
+
+}
+
+/* ===========================
+   GALAXY CONTAINER
+=========================== */
+
+.galaxy{
+
+    position:fixed;
+
+    inset:0;
+
+    overflow:hidden;
+
+    pointer-events:none;
+
+    z-index:-10;
+
+}
+
+/* ===========================
+   STAR LAYERS
+=========================== */
+
+.star-layer{
+
+    position:absolute;
+
+    inset:0;
+
+    width:100%;
+    height:100%;
+
+}
+
+.layer-1{
+
+    opacity:.45;
+
+}
+
+.layer-2{
+
+    opacity:.65;
+
+}
+
+.layer-3{
+
+    opacity:1;
+
+}
+
+/* ===========================
+   STARS
+=========================== */
+
+.star{
+
+    position:absolute;
+
+    width:3px;
+
+    height:3px;
+
+    border-radius:50%;
+
+    background:white;
+
+    box-shadow:
+
+        0 0 8px white,
+
+        0 0 20px rgba(255,255,255,.4);
+
+}
+
+/* ===========================
+   BIG STARS
+=========================== */
+
+.big-star{
+
+    width:5px;
+
+    height:5px;
+
+    box-shadow:
+
+        0 0 15px white,
+
+        0 0 30px #8B5CF6;
+
+}
+
+/* ===========================
+   SHOOTING STAR LAYER
+=========================== */
+
+.shooting-layer{
+
+    position:absolute;
+
+    inset:0;
+
+    overflow:hidden;
+
+    pointer-events:none;
+
+}
+
+/* ===========================
+   SHOOTING STAR
+=========================== */
+
+.shooting-star{
+
+    position:absolute;
+
+    width:180px;
+
+    height:2px;
+
+    background:
+
+    linear-gradient(
+
+        90deg,
+
+        white,
+
+        rgba(255,255,255,.2),
+
+        transparent
+
+    );
+
+    border-radius:50px;
+
+    transform:rotate(-35deg);
+
+    filter:blur(.4px);
+
+}
+
+/* ===========================
+   NEBULA
+=========================== */
+
+.nebula{
+
+    position:absolute;
+
+    width:700px;
+
+    height:700px;
+
+    border-radius:50%;
+
+    filter:blur(120px);
+
+    opacity:.18;
+
+}
+
+.nebula.one{
+
+    background:#8B5CF6;
+
+    top:-250px;
+
+    left:-200px;
+
+}
+
+.nebula.two{
+
+    background:#FF4D8D;
+
+    bottom:-250px;
+
+    right:-200px;
+
+}
+
+.nebula.three{
+
+    background:#4F9DFF;
+
+    top:40%;
+
+    left:45%;
+
+}
+
+/* ===========================
+   MOON
+=========================== */
+
+.moon{
+
+    position:absolute;
+
+    top:70px;
+
+    right:90px;
+
+    width:130px;
+
+    height:130px;
+
+    border-radius:50%;
+
+    background:
+
+        radial-gradient(
+
+        circle at 35% 35%,
+
+        #ffffff,
+
+        #dddddd,
+
+        #bfbfbf
+
+        );
+
+    box-shadow:
+
+        0 0 40px rgba(255,255,255,.45),
+
+        0 0 90px rgba(255,255,255,.15);
+
+}
+
+/* ===========================
+   MOON GLOW
+=========================== */
+
+.moon::after{
+
+    content:"";
+
+    position:absolute;
+
+    inset:-25px;
+
+    border-radius:50%;
+
+    background:
+
+        radial-gradient(
+
+        rgba(255,255,255,.2),
+
+        transparent 70%
+
+        );
+
+}
+
+/* ===========================
+   FLOATING PARTICLES
+=========================== */
+
+.particle{
+
+    position:absolute;
+
+    width:2px;
+
+    height:2px;
+
+    border-radius:50%;
+
+    background:white;
+
+    opacity:.5;
+
+}
+
+/* ===========================
+   GALAXY VIGNETTE
+=========================== */
+
+.galaxy-overlay{
+
+    position:fixed;
+
+    inset:0;
+
+    pointer-events:none;
+
+    z-index:-5;
+
+    background:
+
+    radial-gradient(
+
+        circle,
+
+        transparent 45%,
+
+        rgba(0,0,0,.45)
+
+    );
+
+}

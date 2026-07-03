@@ -1,0 +1,743 @@
+/* ==========================================================
+   PROJECT AURORA
+   Main Style Sheet
+   Author : Ghulam Asghar
+========================================================== */
+
+/* =========================
+   GOOGLE VARIABLES
+========================= */
+
+:root{
+
+    --bg:#030712;
+    --bg-light:#071321;
+
+    --primary:#8B5CF6;
+    --secondary:#FF4D8D;
+    --tertiary:#06b6d4;
+
+    --gold:#FFD166;
+    --rose:#ff9de2;
+
+    --white:#ffffff;
+
+    --text:#d1d5db;
+
+    --glass:rgba(255,255,255,.07);
+
+    --glass-border:rgba(255,255,255,.13);
+
+    --shadow:0 25px 60px rgba(0,0,0,.55);
+
+    --radius:28px;
+
+    --glow-purple: 0 0 40px rgba(139,92,246,.45), 0 0 80px rgba(139,92,246,.2);
+    --glow-pink:   0 0 40px rgba(255,77,141,.45), 0 0 80px rgba(255,77,141,.2);
+
+}
+
+/* =========================
+   RESET
+========================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+
+    scroll-behavior:smooth;
+
+}
+
+body{
+
+    font-family:'Poppins',sans-serif;
+
+    background:var(--bg);
+
+    color:var(--white);
+
+    overflow:hidden;
+
+    height:100vh;
+
+}
+
+/* =========================
+   TYPOGRAPHY
+========================= */
+
+h1{
+
+    font-size:60px;
+
+    font-weight:700;
+
+}
+
+h2{
+
+    font-size:42px;
+
+    margin-bottom:20px;
+
+}
+
+h3{
+
+    font-size:30px;
+
+}
+
+p{
+
+    color:var(--text);
+
+    line-height:1.8;
+
+}
+
+/* =========================
+   LINKS
+========================= */
+
+a{
+
+    color:white;
+
+    text-decoration:none;
+
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+button{
+
+    cursor:pointer;
+
+    border:none;
+
+    outline:none;
+
+    padding:15px 35px;
+
+    border-radius:50px;
+
+    background:linear-gradient(135deg, var(--secondary), var(--primary));
+
+    color:white;
+
+    font-size:16px;
+
+    font-weight:600;
+
+    transition:.35s;
+
+    position:relative;
+
+    overflow:hidden;
+
+}
+
+/* shimmer sweep on every button */
+button::after{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:linear-gradient(105deg, transparent 40%, rgba(255,255,255,.25) 50%, transparent 60%);
+
+    transform:translateX(-100%);
+
+    transition:transform .55s ease;
+
+}
+
+button:hover::after{ transform:translateX(100%); }
+
+button:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:0 18px 40px rgba(255,77,141,.4), 0 0 0 1px rgba(255,255,255,.1);
+
+}
+
+button:active{ transform:scale(.96); }
+
+/* =========================
+   INPUT
+========================= */
+
+input{
+
+    width:100%;
+
+    padding:18px;
+
+    border-radius:15px;
+
+    border:1px solid rgba(255,255,255,.15);
+
+    background:rgba(255,255,255,.06);
+
+    color:white;
+
+    outline:none;
+
+    margin:25px 0;
+
+    font-size:17px;
+
+}
+
+input::placeholder{
+
+    color:#9ca3af;
+
+}
+
+/* =========================
+   NAME SCREEN
+========================= */
+
+#nameScreen {
+
+    overflow: hidden;
+
+}
+
+/* Floating emojis in background */
+.name-floaties {
+
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    z-index: 0;
+
+}
+
+.name-floaties span {
+
+    position: absolute;
+
+    left: var(--x);
+
+    top:  var(--y);
+
+    font-size: 28px;
+
+    animation: floatie 4s ease-in-out var(--d) infinite;
+
+    opacity: .55;
+
+}
+
+@keyframes floatie {
+    0%,100% { transform: translateY(0)   rotate(0deg);   }
+    50%      { transform: translateY(-18px) rotate(8deg); }
+}
+
+/* Main card */
+.name-card {
+
+    position: relative;
+
+    z-index: 1;
+
+    width: 460px;
+
+    max-width: 92vw;
+
+    padding: 48px 44px 38px;
+
+    border-radius: 32px;
+
+    background: rgba(255,255,255,.06);
+
+    backdrop-filter: blur(32px);
+
+    border: 1px solid rgba(255,255,255,.13);
+
+    box-shadow:
+        0 40px 100px rgba(0,0,0,.6),
+        0 0 0 1px rgba(139,92,246,.18),
+        inset 0 1px 0 rgba(255,255,255,.12),
+        0 0 80px rgba(139,92,246,.08);
+
+    text-align: center;
+
+    animation: glassAppear 1s ease forwards;
+
+}
+
+/* CSS Cake */
+.name-cake {
+
+    margin: 0 auto 24px;
+
+    width: fit-content;
+
+}
+
+.cake-body {
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    margin-bottom: 0;
+
+    position: relative;
+
+    background: linear-gradient(135deg, #ff6eb4, #ff4d8d);
+
+    width: 110px;
+
+    height: 55px;
+
+    border-radius: 8px 8px 0 0;
+
+    margin: 0 auto;
+
+    align-items: flex-start;
+
+    padding-top: 0;
+
+    box-shadow: 0 0 30px rgba(255,77,141,.4);
+
+}
+
+.cake-candle {
+
+    width: 8px;
+
+    height: 28px;
+
+    background: linear-gradient(to bottom, #FFD166, #ffb700);
+
+    border-radius: 4px;
+
+    margin-top: -22px;
+
+    position: relative;
+
+}
+
+.cake-flame {
+
+    position: absolute;
+
+    top: -14px;
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: 10px;
+
+    height: 14px;
+
+    background: radial-gradient(ellipse at bottom, #fff 0%, #FFD166 40%, #ff6b00 100%);
+
+    border-radius: 50% 50% 30% 30%;
+
+    animation: flicker .6s ease-in-out infinite alternate;
+
+}
+
+@keyframes flicker {
+    from { transform: translateX(-50%) scaleY(1)   scaleX(1);   opacity: 1;   }
+    to   { transform: translateX(-50%) scaleY(.85) scaleX(1.1); opacity: .85; }
+}
+
+.cake-base {
+
+    width: 130px;
+
+    height: 38px;
+
+    background: linear-gradient(135deg, #c084fc, #8B5CF6);
+
+    border-radius: 0 0 14px 14px;
+
+    margin: 0 auto;
+
+    box-shadow: 0 0 25px rgba(139,92,246,.4);
+
+}
+
+/* Title */
+.name-title {
+
+    font-family: 'Great Vibes', cursive;
+
+    font-size: 52px;
+
+    margin-bottom: 8px;
+
+    background: linear-gradient(135deg, #fff 30%, #FFD166);
+
+    -webkit-background-clip: text;
+
+    -webkit-text-fill-color: transparent;
+
+}
+
+.name-subtitle {
+
+    font-size: 13px;
+
+    color: rgba(255,255,255,.45);
+
+    letter-spacing: .5px;
+
+    margin-bottom: 4px;
+
+}
+
+/* Input wrapper */
+.name-input-wrap {
+
+    position: relative;
+
+    margin: 22px 0 20px;
+
+}
+
+.name-input-wrap .name-input-icon {
+
+    position: absolute;
+
+    left: 16px;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    font-size: 18px;
+
+    pointer-events: none;
+
+}
+
+.name-input-wrap input {
+
+    margin: 0;
+
+    padding-left: 48px;
+
+    border-radius: 50px;
+
+    border: 1px solid rgba(255,255,255,.15);
+
+    background: rgba(255,255,255,.07);
+
+    transition: border-color .3s, box-shadow .3s;
+
+}
+
+.name-input-wrap input:focus {
+
+    border-color: rgba(139,92,246,.6);
+
+    box-shadow: 0 0 0 3px rgba(139,92,246,.15);
+
+}
+
+/* Hint */
+.name-hint {
+
+    margin-top: 18px;
+
+    font-size: 12px;
+
+    color: rgba(255,255,255,.25);
+
+    letter-spacing: 1px;
+
+}
+
+/* =========================
+   GLASS CARD
+========================= */
+
+.glass-card{
+
+    width:470px;
+
+    max-width:90%;
+
+    padding:45px;
+
+    border-radius:var(--radius);
+
+    background:var(--glass);
+
+    backdrop-filter:blur(25px);
+
+    border:1px solid var(--glass-border);
+
+    box-shadow:var(--shadow);
+
+    text-align:center;
+
+}
+
+/* =========================
+   GLOBAL NAV BUTTONS
+========================= */
+
+#globalNav {
+
+    position: fixed;
+
+    top: 20px;
+
+    left: 20px;
+
+    z-index: 99999;
+
+    display: none;
+
+    gap: 8px;
+
+}
+
+#globalBackBtn,
+#globalHomeBtn {
+
+    width: 46px;
+
+    height: 46px;
+
+    padding: 0;
+
+    border-radius: 50%;
+
+    background: rgba(255,255,255,.08);
+
+    border: 1px solid rgba(255,255,255,.18);
+
+    color: white;
+
+    font-size: 20px;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    backdrop-filter: blur(16px);
+
+    transition: all .3s;
+
+    box-shadow: 0 4px 20px rgba(0,0,0,.3);
+
+}
+
+#globalBackBtn:hover,
+#globalHomeBtn:hover {
+
+    background: rgba(255,255,255,.18);
+
+    transform: translateY(-3px);
+
+    box-shadow: 0 8px 25px rgba(0,0,0,.4);
+
+}
+
+#globalHomeBtn {
+
+    font-size: 18px;
+
+    background: rgba(139,92,246,.2);
+
+    border-color: rgba(139,92,246,.45);
+
+    box-shadow: 0 4px 20px rgba(139,92,246,.2);
+
+}
+
+#globalHomeBtn:hover {
+
+    background: rgba(139,92,246,.4);
+
+    box-shadow: 0 8px 30px rgba(139,92,246,.4);
+
+}
+
+/* =========================
+   SCREEN
+========================= */
+
+.screen{
+
+    position:absolute;
+
+    inset:0;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    opacity:0;
+
+    visibility:hidden;
+
+    transition:.6s;
+
+}
+
+.screen.active{
+
+    opacity:1;
+
+    visibility:visible;
+
+}
+
+#galleryScreen{
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+}
+
+/* =========================
+   LOADING
+========================= */
+
+.loading-content{
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    z-index:5;
+
+}
+
+.loading-content h1{
+
+    font-family:'Great Vibes',cursive;
+
+    font-size:72px;
+
+    margin-top:30px;
+
+}
+
+.loading-content p{
+
+    margin-top:15px;
+
+    letter-spacing:1px;
+
+}
+
+/* =========================
+   HEART
+========================= */
+
+.heart{
+
+    width:120px;
+
+    height:120px;
+
+    position:relative;
+
+    transform:rotate(-45deg);
+
+    background:linear-gradient(
+        45deg,
+        #ff3d6f,
+        #ff74a4
+    );
+
+    box-shadow:
+        0 0 20px rgba(255,61,111,.6),
+        0 0 50px rgba(255,61,111,.3);
+
+}
+
+.heart::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:120px;
+
+    height:120px;
+
+    background:inherit;
+
+    border-radius:50%;
+
+    top:-60px;
+
+    left:0;
+
+}
+
+.heart::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:120px;
+
+    height:120px;
+
+    background:inherit;
+
+    border-radius:50%;
+
+    left:60px;
+
+    top:0;
+
+}
+
+/* =========================
+   SCROLLBAR
+========================= */
+
+::-webkit-scrollbar{ width:6px; }
+
+::-webkit-scrollbar-thumb{
+
+    background: linear-gradient(var(--primary), var(--secondary));
+
+    border-radius: 10px;
+
+}
+
+::-webkit-scrollbar-track{ background:rgba(255,255,255,.04); }

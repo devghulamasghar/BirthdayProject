@@ -1,0 +1,1 @@
+// stars text logic
