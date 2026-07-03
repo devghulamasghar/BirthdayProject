@@ -575,8 +575,9 @@
 
 .ending-from {
     font-size: 13px;
-    color: rgba(255,255,255,.4);
+    color: #FFD166;
     letter-spacing: 2px;
+    filter: drop-shadow(0 0 8px rgba(255,215,102,.4));
 }
 
 .ending-title {
