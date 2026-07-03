@@ -1,1 +1,56 @@
-/* responsive styles */
+@media (max-width: 600px) {
+
+    /* Typography */
+    h1 { font-size: 38px; }
+    h2 { font-size: 28px; }
+
+    /* Loading */
+    .loading-content h1 { font-size: 48px; }
+
+    /* Name screen */
+    .name-card { padding: 32px 24px 28px; }
+    .name-title { font-size: 38px; }
+
+    /* Music screen */
+    .music-screen-wrap { width: 100%; padding: 0 16px; }
+    .music-title { font-size: 44px; }
+    .music-card { padding: 14px 16px; gap: 12px; }
+    .music-card-icon { width: 44px; height: 44px; font-size: 22px; }
+    .music-card:hover { transform: none; }
+    .music-card.selected { transform: none; }
+
+    /* Story */
+    #storyText { font-size: 30px; min-height: 160px; }
+    .story-container { max-width: 95%; }
+
+    /* Portal */
+    #portal { width: 200px; height: 200px; }
+    .portal-core { width: 75px; height: 75px; }
+    .portal-title { font-size: 40px; margin-top: 30px; }
+
+    /* Gallery */
+    .gallery-title { font-size: 40px; }
+    .slide-img-wrap img { width: 88vw; max-height: 52vh; }
+    .slide-wrapper { gap: 10px; }
+    .slide-btn { width: 40px; height: 40px; font-size: 16px; }
+    .gallery-btns { gap: 10px; }
+    .gallery-btns button { font-size: 13px; padding: 12px 20px; }
+
+    /* Envelope */
+    #envelope, #apologyEnvelope {
+        width: 320px;
+        height: 215px;
+    }
+    .envelope-flap { height: 108px; }
+    .wax-seal { top: 66px; width: 58px; height: 58px; font-size: 22px; }
+
+    /* Letter page */
+    .letter-page { width: 96vw; height: 88vh; }
+    .letter-body { padding: 36px 22px 28px; }
+    #letterContent, #apologyContent { font-size: 14px; line-height: 2; }
+
+    /* Global nav */
+    #globalNav { top: 12px; left: 12px; }
+    #globalBackBtn, #globalHomeBtn { width: 40px; height: 40px; font-size: 17px; }
+
+}
