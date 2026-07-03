@@ -41,6 +41,10 @@ function saveName() {
     Aurora.userName = value;
     localStorage.setItem("aurora_name", value);
 
+    // Confetti burst on Let's Begin
+    confetti({ particleCount: 120, spread: 80, origin: { y: 0.6 },
+        colors: ["#8B5CF6","#FF4D8D","#FFD166","#ff9de2","#fff"] });
+
     Scenes.show("musicScreen");
 
 }
