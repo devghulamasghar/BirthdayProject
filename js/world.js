@@ -95,6 +95,8 @@ function initWorldScreen() {
 
         <canvas id="worldCanvas"></canvas>
 
+        <canvas id="auroraCanvas"></canvas>
+
         <div class="world-title-wrap">
             <p class="world-title">A World of Love 🌸</p>
             <p class="world-subtitle">✦  no hate  •  no jealousy  •  only peace  ✦</p>
@@ -119,6 +121,7 @@ function initWorldScreen() {
     `;
 
     startWorldCanvas();
+    startAurora();
     buildOrbits();
     spawnLoveWords();
     animateWorldIn();
@@ -187,6 +190,62 @@ function startWorldCanvas() {
             ctx.fill();
         });
         animId = requestAnimationFrame(draw);
+    })();
+}
+
+// ── Aurora Borealis canvas ──
+function startAurora() {
+
+    const canvas = document.getElementById("auroraCanvas");
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const bands = [
+        { y: 0.25, color: "rgba(0,255,150,",  speed: 0.0008, amp: 80,  wave: 0 },
+        { y: 0.35, color: "rgba(100,80,255,",  speed: 0.0006, amp: 60,  wave: 1.5 },
+        { y: 0.20, color: "rgba(0,220,255,",   speed: 0.001,  amp: 50,  wave: 3 },
+        { y: 0.42, color: "rgba(180,50,255,",  speed: 0.0005, amp: 70,  wave: 0.8 }
+    ];
+
+    let t = 0;
+    let auroraAnimId;
+
+    document.addEventListener("sceneChanged", () => cancelAnimationFrame(auroraAnimId), { once: true });
+
+    (function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        t += 1;
+
+        bands.forEach(b => {
+            const baseY = canvas.height * b.y;
+            ctx.beginPath();
+
+            for (let x = 0; x <= canvas.width; x += 4) {
+                const y = baseY
+                    + Math.sin(x * 0.008 + t * b.speed * 60 + b.wave) * b.amp
+                    + Math.sin(x * 0.003 + t * b.speed * 40) * (b.amp * 0.4);
+
+                x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+            }
+
+            ctx.lineTo(canvas.width, 0);
+            ctx.lineTo(0, 0);
+            ctx.closePath();
+
+            const grad = ctx.createLinearGradient(0, baseY - b.amp, 0, baseY + b.amp * 2);
+            grad.addColorStop(0,   b.color + "0)");
+            grad.addColorStop(0.3, b.color + "0.06)");
+            grad.addColorStop(0.6, b.color + "0.03)");
+            grad.addColorStop(1,   b.color + "0)");
+
+            ctx.fillStyle = grad;
+            ctx.fill();
+        });
+
+        auroraAnimId = requestAnimationFrame(draw);
     })();
 }
 

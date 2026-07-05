@@ -1,0 +1,250 @@
+/* ==========================================================
+   PROJECT AURORA — Wish Jar + Aurora
+========================================================== */
+
+/* ── Aurora canvas (world screen) ── */
+#auroraCanvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+/* ── Wish screen ── */
+#wishScreen { overflow: hidden; }
+
+.wish-wrap {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.wish-stars-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+}
+
+@keyframes wishStarTwinkle {
+    0%,100% { opacity: .1; transform: scale(1);   }
+    50%     { opacity: .6; transform: scale(1.4); }
+}
+
+/* ── Content ── */
+.wish-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    width: 100%;
+    max-width: 480px;
+    padding: 0 24px;
+}
+
+.wish-title {
+    font-family: 'Great Vibes', cursive;
+    font-size: 58px;
+    background: linear-gradient(135deg, #fff 20%, #FFD166 50%, #ff9de2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 20px rgba(255,209,102,.5));
+    text-align: center;
+}
+
+.wish-subtitle {
+    font-size: 13px;
+    color: rgba(255,255,255,.4);
+    letter-spacing: 1.5px;
+    text-align: center;
+    line-height: 1.8;
+}
+
+/* ── Jar ── */
+.wish-jar-wrap {
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+.wish-jar {
+    position: relative;
+    width: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.jar-lid {
+    width: 72px;
+    height: 16px;
+    background: linear-gradient(135deg, #c4b5fd, #8B5CF6);
+    border-radius: 8px 8px 0 0;
+    box-shadow: 0 0 20px rgba(139,92,246,.6);
+    z-index: 3;
+    position: relative;
+}
+
+.jar-body {
+    width: 80px;
+    height: 100px;
+    background: linear-gradient(160deg,
+        rgba(196,181,253,.15) 0%,
+        rgba(139,92,246,.08) 50%,
+        rgba(255,77,141,.08) 100%
+    );
+    border: 1.5px solid rgba(196,181,253,.35);
+    border-radius: 8px 8px 18px 18px;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 0 30px rgba(139,92,246,.2), inset 0 0 20px rgba(255,255,255,.04);
+}
+
+.jar-shine {
+    position: absolute;
+    top: 8px; left: 8px;
+    width: 12px; height: 40px;
+    background: linear-gradient(to bottom, rgba(255,255,255,.25), transparent);
+    border-radius: 6px;
+    pointer-events: none;
+}
+
+.jar-particles {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.jar-glow {
+    position: absolute;
+    inset: -20px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(139,92,246,.4), transparent 70%);
+    opacity: 0;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.jar-label {
+    font-size: 10px;
+    color: rgba(196,181,253,.6);
+    letter-spacing: 2px;
+    margin-top: 10px;
+    text-align: center;
+}
+
+/* ── Input ── */
+.wish-input-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.wish-textarea {
+    width: 100%;
+    height: 110px;
+    background: rgba(255,255,255,.05);
+    border: 1px solid rgba(196,181,253,.25);
+    border-radius: 18px;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    line-height: 1.8;
+    padding: 16px 20px;
+    resize: none;
+    outline: none;
+    transition: border-color .3s, box-shadow .3s;
+    backdrop-filter: blur(12px);
+}
+
+.wish-textarea::placeholder { color: rgba(255,255,255,.25); }
+
+.wish-textarea:focus {
+    border-color: rgba(196,181,253,.5);
+    box-shadow: 0 0 0 3px rgba(139,92,246,.12);
+}
+
+.wish-char-count {
+    font-size: 11px;
+    color: rgba(255,255,255,.2);
+    letter-spacing: 1px;
+    align-self: flex-end;
+    margin-top: -4px;
+}
+
+.wish-seal-btn {
+    background: linear-gradient(135deg, rgba(139,92,246,.3), rgba(255,77,141,.2));
+    border: 1px solid rgba(196,181,253,.3);
+    color: white;
+    font-size: 14px;
+    padding: 12px 36px;
+    border-radius: 50px;
+    letter-spacing: 1px;
+    transition: all .3s;
+    box-shadow: 0 0 20px rgba(139,92,246,.15);
+}
+
+.wish-seal-btn:hover {
+    background: linear-gradient(135deg, rgba(139,92,246,.5), rgba(255,77,141,.35));
+    transform: translateY(-3px);
+    box-shadow: 0 0 40px rgba(139,92,246,.4);
+}
+
+/* ── Sealed message ── */
+.wish-sealed-msg {
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 0 32px;
+    text-align: center;
+}
+
+.wish-sealed-title {
+    font-family: 'Great Vibes', cursive;
+    font-size: 52px;
+    background: linear-gradient(135deg, #fff 20%, #FFD166 55%, #ff9de2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 20px rgba(255,209,102,.5));
+}
+
+.wish-sealed-sub {
+    font-size: 14px;
+    color: rgba(255,255,255,.5);
+    line-height: 1.9;
+    max-width: 380px;
+}
+
+.wish-continue-btn {
+    background: linear-gradient(135deg, var(--secondary), var(--primary));
+    color: white;
+    font-size: 14px;
+    padding: 13px 36px;
+    border-radius: 50px;
+    box-shadow: 0 0 30px rgba(139,92,246,.3);
+}
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+    .wish-title        { font-size: 42px; }
+    .jar-body          { width: 64px; height: 80px; }
+    .jar-lid           { width: 58px; }
+    .wish-sealed-title { font-size: 38px; }
+    #auroraCanvas      { opacity: 0.5; }
+}
