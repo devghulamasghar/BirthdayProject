@@ -27,7 +27,6 @@ class Gallery {
             const apologyBtn = this.container.querySelector("#galleryApologyBtn");
             if (doneBtn) doneBtn.onclick = () => Scenes.show("letterScreen");
             if (apologyBtn) apologyBtn.onclick = () => Scenes.show("apologyScreen");
-            attachPortalClick();
             return;
         }
 
@@ -85,7 +84,6 @@ class Gallery {
                     <button class="slide-done-btn" id="galleryDoneBtn">Open Letter 💌</button>
                     <button class="slide-done-btn" id="galleryApologyBtn">Read Apology 🤍</button>
                 </div>
-                ${worldPortalHTML()}
             </div>
         `;
 
@@ -96,8 +94,6 @@ class Gallery {
         this.container.querySelector("#galleryDoneBtn").addEventListener("click", () => Scenes.show("letterScreen"));
 
         this.container.querySelector("#galleryApologyBtn").addEventListener("click", () => Scenes.show("apologyScreen"));
-
-        attachPortalClick();
 
         gsap.from(".slide-img-wrap", { opacity: 0, scale: .8, duration: 1 });
 
