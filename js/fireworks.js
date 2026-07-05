@@ -52,8 +52,11 @@ function initFireworks() {
     gsap.from(".ending-portal-section", { y: 30, opacity: 0, duration: 1,   delay: 2.6, ease: "power3.out" });
     gsap.from(".ending-replay-btn",     { y: 20, opacity: 0, duration: 0.8, delay: 3.2 });
 
-    // Attach portal click after it animates in
-    setTimeout(() => attachPortalClick(), 2700);
+    // Attach portal click directly — no setTimeout race condition
+    const portalOrb = document.getElementById("worldPortalOrb");
+    if (portalOrb) {
+        portalOrb.addEventListener("click", enterWorld, { once: true });
+    }
 
     // Floating stars
     const starsEl = document.getElementById("endingStars");
