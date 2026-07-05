@@ -75,6 +75,11 @@ function initWishScreen() {
         charCount.textContent = textarea.value.length;
     });
 
+    // Scroll textarea into view when keyboard opens on mobile
+    textarea.addEventListener("focus", () => {
+        setTimeout(() => textarea.scrollIntoView({ behavior: "smooth", block: "center" }), 300);
+    });
+
     // Seal button
     document.getElementById("wishSealBtn").addEventListener("click", sealWish);
 }
