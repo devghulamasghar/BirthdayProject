@@ -50,6 +50,7 @@
 html{
 
     scroll-behavior:smooth;
+    height: -webkit-fill-available;
 
 }
 
@@ -64,6 +65,7 @@ body{
     overflow:hidden;
 
     height:100vh;
+    height: -webkit-fill-available;
 
     /* Prevent text selection on tap for a cleaner mobile feel */
     -webkit-tap-highlight-color: transparent;

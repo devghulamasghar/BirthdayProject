@@ -90,6 +90,7 @@ songContinueBtn.addEventListener("click", () => goToStory());
 function playMusic(src) {
     bgMusic.src = src;
     bgMusic.volume = CONFIG.MUSIC_VOLUME;
+    bgMusic.load();
     bgMusic.play().catch(() => {});
 }
 

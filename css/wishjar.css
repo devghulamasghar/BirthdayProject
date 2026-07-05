@@ -5,7 +5,7 @@
 /* ── Aurora canvas (world screen) ── */
 #auroraCanvas {
     position: absolute;
-    inset: 0;
+    top: 0; left: 0; right: 0; bottom: 0;
     width: 100%;
     height: 100%;
     z-index: 1;
@@ -27,7 +27,7 @@
 
 .wish-stars-bg {
     position: absolute;
-    inset: 0;
+    top: 0; left: 0; right: 0; bottom: 0;
     pointer-events: none;
     z-index: 0;
 }
@@ -160,12 +160,15 @@
     color: white;
     font-family: 'Poppins', sans-serif;
     font-size: 14px;
+    font-size: max(14px, 16px);
     line-height: 1.8;
     padding: 16px 20px;
     resize: none;
     outline: none;
     transition: border-color .3s, box-shadow .3s;
+    -webkit-backdrop-filter: blur(12px);
     backdrop-filter: blur(12px);
+    -webkit-appearance: none;
 }
 
 .wish-textarea::placeholder { color: rgba(255,255,255,.25); }
@@ -204,7 +207,7 @@
 /* ── Sealed message ── */
 .wish-sealed-msg {
     position: absolute;
-    inset: 0;
+    top: 0; left: 0; right: 0; bottom: 0;
     z-index: 10;
     display: flex;
     flex-direction: column;

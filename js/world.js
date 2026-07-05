@@ -298,12 +298,11 @@ function buildOrbits() {
             openLightbox(place);
         });
 
-        // Touch support
+        // Touch support — use touchstart for snappier iOS response
         planet.addEventListener("touchend", (e) => {
-            e.preventDefault();
             e.stopPropagation();
             openLightbox(place);
-        }, { passive: false });
+        }, { passive: true });
     });
 }
 
