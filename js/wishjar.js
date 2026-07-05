@@ -88,8 +88,11 @@ function startJarParticles() {
     const container = document.getElementById("jarParticles");
     if (!container) return;
 
-    setInterval(() => {
-        if (!document.getElementById("jarParticles")) return;
+    const intervalId = setInterval(() => {
+        if (!document.getElementById("jarParticles")) {
+            clearInterval(intervalId);
+            return;
+        }
         const p = document.createElement("span");
         p.textContent = ["✨","💫","⭐","🌟"][Math.floor(Math.random() * 4)];
         p.style.cssText = `

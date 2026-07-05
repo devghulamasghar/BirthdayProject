@@ -505,25 +505,6 @@
     margin-bottom: 8px;
 }
 
-/* ── Ending screen portal section ── */
-.ending-portal-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-    margin: 8px 0;
-}
-
-.ending-portal-invite {
-    font-family: 'Great Vibes', cursive;
-    font-size: 28px;
-    background: linear-gradient(135deg, #fff 20%, #c4b5fd 55%, #ff9de2);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 0 14px rgba(139,92,246,.5));
-    margin-bottom: 8px;
-}
-
 /* ── Age line ── */
 .ending-age {
     font-size: 13px;

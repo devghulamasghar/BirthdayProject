@@ -16,7 +16,7 @@ const CONFIG = {
 
     AUTHOR: "Ghulam Asghar",
 
-    DEBUG: true,
+    DEBUG: false,
 
     LOADING_TIME: 5000,
 

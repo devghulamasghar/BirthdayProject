@@ -49,6 +49,7 @@
     border-radius:50%;
     border:2px solid rgba(255,255,255,.25);
     animation:portalRotate 12s linear infinite;
+    will-change:transform;
 }
 
 .ring2{
@@ -79,6 +80,7 @@
         0 0 120px rgba(255,77,141,.6),
         0 0 200px rgba(139,92,246,.3);
     animation:coreBreath 3s ease-in-out infinite;
+    will-change:transform;
 }
 
 @keyframes coreBreath{

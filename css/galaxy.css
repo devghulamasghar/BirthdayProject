@@ -23,6 +23,8 @@
 
     background:#020617;
 
+    will-change:transform;
+
 }
 
 /* ===========================

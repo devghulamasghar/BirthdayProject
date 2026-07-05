@@ -29,6 +29,10 @@ if (continueBtn) {
     continueBtn.addEventListener("click", saveName);
 }
 
+if (nameInput) {
+    nameInput.addEventListener("keydown", e => { if (e.key === "Enter") saveName(); });
+}
+
 function saveName() {
 
     const value = nameInput.value.trim();

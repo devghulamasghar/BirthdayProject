@@ -62,7 +62,7 @@ function initApologyScreen() {
           onComplete: () => {
               // Gentle float
               gsap.to(env, { y: -12, duration: 1.8, ease: "sine.inOut", yoyo: true, repeat: -1 });
-              env.addEventListener("click", openApology);
+              env.addEventListener("click", openApology, { once: true });
           }
         }
     );

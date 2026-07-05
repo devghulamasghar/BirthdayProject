@@ -149,9 +149,10 @@ button{
 
     overflow:hidden;
 
+    touch-action:manipulation;
+
 }
 
-/* shimmer sweep on every button */
 button::after{
 
     content:"";
@@ -363,6 +364,8 @@ input::placeholder{
     border-radius: 50% 50% 30% 30%;
 
     animation: flicker .6s ease-in-out infinite alternate;
+
+    will-change: transform;
 
 }
 
@@ -609,6 +612,9 @@ input::placeholder{
     visibility:hidden;
 
     transition:.6s;
+
+    min-height:100vh;
+    min-height:-webkit-fill-available;
 
 }
 

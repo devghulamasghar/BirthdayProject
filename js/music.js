@@ -92,6 +92,8 @@ function playMusic(src) {
     bgMusic.volume = CONFIG.MUSIC_VOLUME;
     bgMusic.load();
     bgMusic.play().catch(() => {});
+    // iOS Safari fallback: loop via ended event
+    bgMusic.onended = () => bgMusic.play().catch(() => {});
 }
 
 function selectCard(card) {
