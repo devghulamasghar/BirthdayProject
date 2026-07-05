@@ -57,7 +57,7 @@ function initCakeScreen() {
                 // Confetti burst
                 confetti({ particleCount: 180, spread: 100, origin: { y: 0.6 },
                     colors: ["#8B5CF6","#FF4D8D","#FFD166","#ff9de2","#fff"] });
-                setTimeout(() => Scenes.show("letterScreen"), 2800);
+                setTimeout(() => Scenes.show("wishScreen"), 2800);
             } else {
                 const msgs = ["", "Keep going... 🌸", "Almost there... ✨", "One more! 💫", "Last one! 🎀"];
                 sub.textContent = msgs[blown] || "Keep going...";

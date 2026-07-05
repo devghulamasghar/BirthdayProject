@@ -25,8 +25,7 @@ class Gallery {
         if (this.container.querySelector(".slideshow")) {
             const doneBtn = this.container.querySelector("#galleryDoneBtn");
             const apologyBtn = this.container.querySelector("#galleryApologyBtn");
-            if (doneBtn) doneBtn.onclick = () => Scenes.show("wishScreen");
-            if (apologyBtn) apologyBtn.onclick = () => Scenes.show("apologyScreen");
+            if (doneBtn) doneBtn.onclick = () => Scenes.show("letterScreen");
             return;
         }
 
@@ -82,7 +81,6 @@ class Gallery {
                 <p class="slide-counter">1 / ${this.images.length}</p>
                 <div class="gallery-btns">
                     <button class="slide-done-btn" id="galleryDoneBtn">Open Letter 💌</button>
-                    <button class="slide-done-btn" id="galleryApologyBtn">Read Apology 🤍</button>
                 </div>
             </div>
         `;
@@ -91,9 +89,7 @@ class Gallery {
 
         this.container.querySelector(".next-btn").addEventListener("click", () => this.next());
 
-        this.container.querySelector("#galleryDoneBtn").addEventListener("click", () => Scenes.show("wishScreen"));
-
-        this.container.querySelector("#galleryApologyBtn").addEventListener("click", () => Scenes.show("apologyScreen"));
+        this.container.querySelector("#galleryDoneBtn").addEventListener("click", () => Scenes.show("letterScreen"));
 
         // Swipe gesture for mobile
         const imgWrap = this.container.querySelector(".slide-img-wrap");

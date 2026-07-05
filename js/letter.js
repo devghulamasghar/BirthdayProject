@@ -112,7 +112,7 @@ function showLetterPage() {
             <div class="letter-body">
                 <div id="letterContent"></div>
                 <div class="letter-back-wrap">
-                    <button class="letter-back-btn" onclick="Scenes.show('cakeScreen')">Continue to Cake 🎂</button>
+                    <button class="letter-back-btn" onclick="Scenes.show('apologyScreen')">Read Apology 🤍</button>
                 </div>
             </div>
         </div>
