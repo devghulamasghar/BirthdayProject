@@ -8,42 +8,12 @@
 "use strict";
 
 const WORLD_PLACES = [
-    {
-        img:   "images/world/hunza.jpg",
-        name:  "Hunza Valley",
-        desc:  "Heaven on Earth • Gilgit-Baltistan",
-        orbit: 1
-    },
-    {
-        img:   "images/world/fairy_meadows.jpg",
-        name:  "Fairy Meadows",
-        desc:  "Gateway to Nanga Parbat • KPK",
-        orbit: 2
-    },
-    {
-        img:   "images/world/naran.jpg",
-        name:  "Naran Kaghan",
-        desc:  "Valley of Dreams • KPK",
-        orbit: 3
-    },
-    {
-        img:   "images/world/skardu.jpg",
-        name:  "Skardu",
-        desc:  "Land of Giants • Gilgit-Baltistan",
-        orbit: 4
-    },
-    {
-        img:   "images/world/swat.jpg",
-        name:  "Swat Valley",
-        desc:  "Switzerland of Pakistan • KPK",
-        orbit: 5
-    },
-    {
-        img:   "images/world/k2.jpg",
-        name:  "K2 — The Savage Mountain",
-        desc:  "Second highest peak on Earth",
-        orbit: 6
-    }
+    { img: "images/world/hunza.jpg",        name: "Hunza Valley",          desc: "Heaven on Earth  •  Gilgit-Baltistan", orbit: 1 },
+    { img: "images/world/fairy_meadows.jpg",name: "Fairy Meadows",         desc: "Gateway to Nanga Parbat  •  KPK",      orbit: 2 },
+    { img: "images/world/naran.jpg",        name: "Naran Kaghan",          desc: "Valley of Dreams  •  KPK",             orbit: 3 },
+    { img: "images/world/skardu.jpg",       name: "Skardu",                desc: "Land of Giants  •  Gilgit-Baltistan",  orbit: 4 },
+    { img: "images/world/swat.jpg",         name: "Swat Valley",           desc: "Switzerland of Pakistan  •  KPK",      orbit: 5 },
+    { img: "images/world/k2.jpg",           name: "K2 — The Savage Mountain", desc: "Second Highest Peak on Earth",      orbit: 6 }
 ];
 
 const LOVE_WORDS = [
@@ -52,45 +22,72 @@ const LOVE_WORDS = [
     "KINDNESS", "BEAUTY", "GRACE", "FAITH", "JOY"
 ];
 
-// ── Listen for scene change ──
-document.addEventListener("sceneChanged", (e) => {
-    if (e.detail === "worldScreen") initWorldScreen();
-});
+// ── Portal HTML helper (used in gallery + fireworks) ──
+function worldPortalHTML() {
+    return `
+        <div class="world-portal-wrap" id="worldPortalWrap">
+            <div class="world-portal-orb" id="worldPortalOrb">
+                <div class="orb-ring"></div>
+                <div class="orb-ring"></div>
+                <div class="orb-ring"></div>
+                <div class="orb-core"></div>
+            </div>
+            <p class="world-portal-label">Enter the World of Love</p>
+            <p class="world-portal-hint">✦ tap to journey within ✦</p>
+        </div>
+    `;
+}
 
-// ── Warp tunnel entry ──
+// ── Attach portal click after render ──
+function attachPortalClick() {
+    const orb = document.getElementById("worldPortalOrb");
+    if (orb) orb.addEventListener("click", enterWorld, { once: true });
+}
+
+// ── Cinematic warp tunnel entry ──
 function enterWorld() {
 
     const overlay = document.getElementById("warpOverlay");
 
-    // Phase 1: white flash + zoom in
-    gsap.timeline()
+    // Build tunnel layers
+    overlay.innerHTML = `<div class="warp-tunnel"></div><div class="warp-flash"></div>`;
 
-        .to(overlay, {
-            opacity: 1,
-            duration: 0.15,
-            ease: "power4.in"
-        })
+    const tunnel = overlay.querySelector(".warp-tunnel");
+    const flash  = overlay.querySelector(".warp-flash");
 
-        .to(overlay, {
-            opacity: 0,
-            scale: 3,
-            duration: 1.8,
-            ease: "power3.out",
-            onStart: () => {
-                Scenes.show("worldScreen");
-            }
-        })
+    gsap.set(overlay, { opacity: 0, clearProps: "scale" });
+    gsap.set(flash,   { opacity: 0, scale: 0.5 });
 
-        .set(overlay, { scale: 1 });
+    const tl = gsap.timeline({
+        onComplete: () => {
+            overlay.innerHTML = "";
+            gsap.set(overlay, { opacity: 0 });
+        }
+    });
+
+    // 1 — tunnel spins in
+    tl.to(overlay, { opacity: 1, duration: 0.3, ease: "power2.in" })
+
+    // 2 — flash blooms from centre
+    .to(flash, { opacity: 1, scale: 6, duration: 0.55, ease: "power4.in" }, "-=0.05")
+
+    // 3 — switch scene at peak white
+    .call(() => Scenes.show("worldScreen"))
+
+    // 4 — fade out
+    .to(overlay, { opacity: 0, duration: 0.9, ease: "power3.out" });
 }
+
+// ── Scene listener ──
+document.addEventListener("sceneChanged", (e) => {
+    if (e.detail === "worldScreen") initWorldScreen();
+});
 
 // ── Main init ──
 function initWorldScreen() {
 
     const screen = document.getElementById("worldScreen");
-    screen.innerHTML = "";
 
-    // Nebula blobs
     screen.innerHTML = `
         <div class="world-nebula world-nebula-1"></div>
         <div class="world-nebula world-nebula-2"></div>
@@ -100,11 +97,11 @@ function initWorldScreen() {
 
         <div class="world-title-wrap">
             <p class="world-title">A World of Love 🌸</p>
-            <p class="world-subtitle">NO HATE • NO JEALOUSY • ONLY PEACE</p>
+            <p class="world-subtitle">✦  no hate  •  no jealousy  •  only peace  ✦</p>
         </div>
 
         <div class="solar-system" id="solarSystem">
-            <div class="world-sun" id="worldSun" title="You are the centre of this world ✨"></div>
+            <div class="world-sun" id="worldSun"></div>
         </div>
 
         <div class="world-bottom-nav">
@@ -126,22 +123,23 @@ function initWorldScreen() {
     spawnLoveWords();
     animateWorldIn();
 
-    // Sun tooltip
-    const sun = document.getElementById("worldSun");
-    sun.addEventListener("click", () => {
+    // Sun — confetti burst on click
+    document.getElementById("worldSun").addEventListener("click", () => {
         confetti({
-            particleCount: 120,
+            particleCount: 140,
             spread: 360,
-            startVelocity: 30,
+            startVelocity: 28,
             origin: { x: 0.5, y: 0.5 },
             colors: ["#FFD166","#FF4D8D","#8B5CF6","#fff","#06b6d4"]
         });
     });
 
-    // Lightbox close
+    // Lightbox close — button
     document.getElementById("lightboxClose").addEventListener("click", closeLightbox);
+
+    // Lightbox close — backdrop click
     document.getElementById("worldLightbox").addEventListener("click", (e) => {
-        if (e.target === document.getElementById("worldLightbox")) closeLightbox();
+        if (e.target.id === "worldLightbox") closeLightbox();
     });
 }
 
@@ -151,9 +149,9 @@ function startWorldCanvas() {
     const canvas = document.getElementById("worldCanvas");
     if (!canvas) return;
 
-    const ctx = canvas.getContext("2d");
-    const isMobile = window.innerWidth < 600;
-    const COUNT = isMobile ? 180 : 380;
+    const ctx    = canvas.getContext("2d");
+    const mobile = window.innerWidth < 600;
+    const COUNT  = mobile ? 180 : 380;
 
     canvas.width  = window.innerWidth;
     canvas.height = window.innerHeight;
@@ -166,7 +164,13 @@ function startWorldCanvas() {
         d: (Math.random() > 0.5 ? 1 : -1) * 0.005
     }));
 
-    function draw() {
+    let running = true;
+
+    // Stop loop when screen changes
+    document.addEventListener("sceneChanged", () => { running = false; }, { once: true });
+
+    (function draw() {
+        if (!running) return;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         stars.forEach(s => {
             s.a += s.d;
@@ -179,9 +183,7 @@ function startWorldCanvas() {
             ctx.fill();
         });
         requestAnimationFrame(draw);
-    }
-
-    draw();
+    })();
 }
 
 // ── Build orbit rings + planets ──
@@ -190,38 +192,33 @@ function buildOrbits() {
     const system = document.getElementById("solarSystem");
     if (!system) return;
 
+    const mobile     = window.innerWidth < 600;
+    const radii      = [100, 160, 225, 295, 370, 450];
+    const mobileRadii= [65,  105, 147, 192, 240, 290];
+
     WORLD_PLACES.forEach((place, i) => {
 
         const orbitEl = document.createElement("div");
         orbitEl.className = `orbit orbit-${place.orbit}`;
 
-        // Planet wrapper positioned at the right edge of the orbit
         const wrap = document.createElement("div");
         wrap.className = "planet-wrap";
 
-        // Get orbit radius from CSS (half the orbit width)
-        const radii = [100, 160, 225, 295, 370, 450];
-        const isMobile = window.innerWidth < 600;
-        const mobileRadii = [65, 105, 147, 192, 240, 290];
-        const r = isMobile ? mobileRadii[i] : radii[i];
-
-        wrap.style.cssText = `
-            margin-left: ${r}px;
-            margin-top: -27px;
-        `;
+        const r = mobile ? mobileRadii[i] : radii[i];
+        wrap.style.cssText = `margin-left:${r}px; margin-top:-27px;`;
 
         const planet = document.createElement("div");
         planet.className = "planet";
 
         const img = document.createElement("img");
-        img.src = place.img;
-        img.alt = place.name;
+        img.src     = place.img;
+        img.alt     = place.name;
         img.loading = "lazy";
 
         planet.appendChild(img);
 
         const label = document.createElement("span");
-        label.className = "planet-label";
+        label.className   = "planet-label";
         label.textContent = place.name;
 
         wrap.appendChild(planet);
@@ -229,12 +226,14 @@ function buildOrbits() {
         orbitEl.appendChild(wrap);
         system.appendChild(orbitEl);
 
-        // Click → lightbox
-        planet.addEventListener("click", () => openLightbox(place));
+        planet.addEventListener("click", (e) => {
+            e.stopPropagation();
+            openLightbox(place);
+        });
     });
 }
 
-// ── Lightbox ──
+// ── Lightbox open ──
 function openLightbox(place) {
 
     const lb   = document.getElementById("worldLightbox");
@@ -242,35 +241,24 @@ function openLightbox(place) {
     const name = document.getElementById("lightboxName");
     const desc = document.getElementById("lightboxDesc");
 
-    img.src       = place.img;
+    img.src          = place.img;
     name.textContent = place.name;
     desc.textContent = place.desc;
 
     lb.classList.add("open");
 
-    gsap.fromTo(img,
-        { scale: 0.8, opacity: 0 },
-        { scale: 1,   opacity: 1, duration: 0.6, ease: "back.out(1.4)" }
-    );
-    gsap.fromTo(name,
-        { y: 20, opacity: 0 },
-        { y: 0,  opacity: 1, duration: 0.5, delay: 0.2 }
-    );
-    gsap.fromTo(desc,
-        { y: 10, opacity: 0 },
-        { y: 0,  opacity: 1, duration: 0.5, delay: 0.35 }
-    );
+    gsap.fromTo(img,  { scale: 0.8, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.6, ease: "back.out(1.4)" });
+    gsap.fromTo(name, { y: 20, opacity: 0 },       { y: 0, opacity: 1, duration: 0.5, delay: 0.2 });
+    gsap.fromTo(desc, { y: 10, opacity: 0 },       { y: 0, opacity: 1, duration: 0.5, delay: 0.35 });
 }
 
+// ── Lightbox close ──
 function closeLightbox() {
+
     const lb = document.getElementById("worldLightbox");
-    gsap.to(lb, {
-        opacity: 0, duration: 0.3,
-        onComplete: () => {
-            lb.classList.remove("open");
-            gsap.set(lb, { opacity: 1 });
-        }
-    });
+    if (!lb) return;
+
+    lb.classList.remove("open");
 }
 
 // ── Floating love words ──
@@ -279,18 +267,18 @@ function spawnLoveWords() {
     const screen = document.getElementById("worldScreen");
     if (!screen) return;
 
-    LOVE_WORDS.forEach((word, i) => {
+    LOVE_WORDS.forEach((word) => {
         const el = document.createElement("span");
-        el.className = "love-word";
+        el.className   = "love-word";
         el.textContent = word;
-        const duration = 18 + Math.random() * 20;
-        const delay    = Math.random() * 15;
+        const dur   = 18 + Math.random() * 20;
+        const delay = Math.random() * 15;
         el.style.cssText = `
-            left: ${5 + Math.random() * 90}%;
-            bottom: -40px;
-            animation-duration: ${duration}s;
-            animation-delay: ${delay}s;
-            --r: ${-15 + Math.random() * 30}deg;
+            left:${5 + Math.random() * 90}%;
+            bottom:-40px;
+            animation-duration:${dur}s;
+            animation-delay:${delay}s;
+            --r:${-15 + Math.random() * 30}deg;
         `;
         screen.appendChild(el);
     });
@@ -299,11 +287,10 @@ function spawnLoveWords() {
 // ── Entrance animation ──
 function animateWorldIn() {
 
-    gsap.from(".world-title-wrap",  { y: -40, opacity: 0, duration: 1.2, delay: 0.3, ease: "power3.out" });
-    gsap.from(".world-sun",         { scale: 0, opacity: 0, duration: 1.4, delay: 0.5, ease: "elastic.out(1,.6)" });
-    gsap.from(".world-bottom-nav",  { y: 40,  opacity: 0, duration: 1,   delay: 1.2, ease: "power3.out" });
+    gsap.from(".world-title-wrap", { y: -40, opacity: 0, duration: 1.2, delay: 0.3, ease: "power3.out" });
+    gsap.from(".world-sun",        { scale: 0, opacity: 0, duration: 1.4, delay: 0.5, ease: "elastic.out(1,.6)" });
+    gsap.from(".world-bottom-nav", { y: 40, opacity: 0, duration: 1, delay: 1.2, ease: "power3.out" });
 
-    // Stagger orbits in
     document.querySelectorAll(".orbit").forEach((o, i) => {
         gsap.from(o, { scale: 0, opacity: 0, duration: 1, delay: 0.6 + i * 0.15, ease: "power3.out" });
     });

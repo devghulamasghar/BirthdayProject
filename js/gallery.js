@@ -25,10 +25,9 @@ class Gallery {
         if (this.container.querySelector(".slideshow")) {
             const doneBtn = this.container.querySelector("#galleryDoneBtn");
             const apologyBtn = this.container.querySelector("#galleryApologyBtn");
-            const worldBtn = this.container.querySelector("#worldPortalBtn");
             if (doneBtn) doneBtn.onclick = () => Scenes.show("letterScreen");
             if (apologyBtn) apologyBtn.onclick = () => Scenes.show("apologyScreen");
-            if (worldBtn) worldBtn.onclick = () => enterWorld();
+            attachPortalClick();
             return;
         }
 
@@ -86,9 +85,7 @@ class Gallery {
                     <button class="slide-done-btn" id="galleryDoneBtn">Open Letter 💌</button>
                     <button class="slide-done-btn" id="galleryApologyBtn">Read Apology 🤍</button>
                 </div>
-                <div class="world-portal-wrap">
-                    <button class="world-portal-btn" id="worldPortalBtn">🌌 Enter the World of Love</button>
-                </div>
+                ${worldPortalHTML()}
             </div>
         `;
 
@@ -100,7 +97,7 @@ class Gallery {
 
         this.container.querySelector("#galleryApologyBtn").addEventListener("click", () => Scenes.show("apologyScreen"));
 
-        this.container.querySelector("#worldPortalBtn").addEventListener("click", () => enterWorld());
+        attachPortalClick();
 
         gsap.from(".slide-img-wrap", { opacity: 0, scale: .8, duration: 1 });
 

@@ -6,7 +6,9 @@ document.addEventListener("sceneChanged", (e) => {
 });
 
 function initFireworks() {
+
     const screen = document.getElementById("fireworksScreen");
+
     screen.innerHTML = `
         <div class="ending-wrap">
             <div class="ending-stars" id="endingStars"></div>
@@ -14,8 +16,14 @@ function initFireworks() {
                 <p class="ending-from">From Ghulam Asghar, with love 💜</p>
                 <h1 class="ending-title">Happy Birthday</h1>
                 <p class="ending-name">Rudaba 🌸</p>
-                <p class="ending-msg">May every day of your life be as beautiful as you are. This little world was built just for you — because you deserve the whole universe. 🌌</p>
+                <p class="ending-msg">May every day of your life be as beautiful as you are.<br>This little world was built just for you —<br>because you deserve the whole universe. 🌌</p>
                 <p class="ending-dua">اللہ تمہیں ہمیشہ خوش رکھے ❤️</p>
+
+                <div class="ending-portal-section">
+                    <p class="ending-portal-invite">A world of love awaits you...</p>
+                    ${worldPortalHTML()}
+                </div>
+
                 <button class="ending-replay-btn" onclick="Scenes.backToStart()">Replay from Start 🎀</button>
             </div>
         </div>
@@ -36,12 +44,16 @@ function initFireworks() {
     }, 500);
 
     // Animate content in
-    gsap.from(".ending-from",    { y: 30, opacity: 0, duration: 0.8, delay: 0.3 });
-    gsap.from(".ending-title",   { y: 40, opacity: 0, duration: 1,   delay: 0.7, ease: "back.out" });
-    gsap.from(".ending-name",    { y: 30, opacity: 0, duration: 0.8, delay: 1.1 });
-    gsap.from(".ending-msg",     { y: 20, opacity: 0, duration: 0.8, delay: 1.5 });
-    gsap.from(".ending-dua",     { y: 20, opacity: 0, duration: 0.8, delay: 2.0 });
-    gsap.from(".ending-replay-btn", { y: 20, opacity: 0, duration: 0.8, delay: 2.5 });
+    gsap.from(".ending-from",           { y: 30, opacity: 0, duration: 0.8, delay: 0.3 });
+    gsap.from(".ending-title",          { y: 40, opacity: 0, duration: 1,   delay: 0.7, ease: "back.out" });
+    gsap.from(".ending-name",           { y: 30, opacity: 0, duration: 0.8, delay: 1.1 });
+    gsap.from(".ending-msg",            { y: 20, opacity: 0, duration: 0.8, delay: 1.5 });
+    gsap.from(".ending-dua",            { y: 20, opacity: 0, duration: 0.8, delay: 2.0 });
+    gsap.from(".ending-portal-section", { y: 30, opacity: 0, duration: 1,   delay: 2.6, ease: "power3.out" });
+    gsap.from(".ending-replay-btn",     { y: 20, opacity: 0, duration: 0.8, delay: 3.2 });
+
+    // Attach portal click after it animates in
+    setTimeout(() => attachPortalClick(), 2700);
 
     // Floating stars
     const starsEl = document.getElementById("endingStars");
@@ -50,7 +62,8 @@ function initFireworks() {
         s.textContent = ["⭐","✨","🌟","💫"][Math.floor(Math.random() * 4)];
         s.style.cssText = `position:absolute;left:${Math.random()*100}%;top:${Math.random()*100}%;font-size:${12+Math.random()*16}px;opacity:0;`;
         starsEl.appendChild(s);
-        gsap.to(s, { opacity: 0.7, duration: 1, delay: Math.random() * 2,
+        gsap.to(s, {
+            opacity: 0.7, duration: 1, delay: Math.random() * 2,
             onComplete: () => gsap.to(s, { y: -20, opacity: 0.3, duration: 2 + Math.random() * 2, yoyo: true, repeat: -1, ease: "sine.inOut" })
         });
     }
