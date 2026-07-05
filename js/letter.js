@@ -128,17 +128,27 @@ function showLetterPage() {
 
 function typeLetter() {
 
-    const screen = document.getElementById("letterScreen");
+    const screen  = document.getElementById("letterScreen");
     const content = document.getElementById("letterContent");
     content.innerHTML = "";
+
+    // Blinking cursor
+    const cursor = document.createElement("span");
+    cursor.className = "type-cursor";
+    cursor.textContent = "|";
+    content.appendChild(cursor);
+
+    // Scroll hint
+    const scrollHint = screen.querySelector(".letter-body");
+    if (scrollHint) scrollHint.setAttribute("data-scroll-hint", "scroll to read ↓");
 
     let i = 0;
 
     const timer = setInterval(() => {
 
         const char = LETTER.charAt(i);
-
-        content.innerHTML += char === "\n" ? "<br>" : char;
+        cursor.insertAdjacentText("beforebegin", char === "\n" ? "" : char);
+        if (char === "\n") cursor.insertAdjacentHTML("beforebegin", "<br>");
 
         i++;
 
@@ -146,6 +156,7 @@ function typeLetter() {
 
         if (i >= LETTER.length) {
             clearInterval(timer);
+            cursor.remove();
             const btn = screen.querySelector(".letter-back-wrap");
             if (btn) gsap.fromTo(btn, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.6 });
         }

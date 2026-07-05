@@ -16,6 +16,7 @@ function initFireworks() {
                 <p class="ending-from">From Ghulam Asghar, with love 💜</p>
                 <h1 class="ending-title">Happy Birthday</h1>
                 <p class="ending-name">Rudaba 🌸</p>
+                <p class="ending-age" id="endingAge"></p>
                 <p class="ending-msg">May every day of your life be as beautiful as you are.<br>This little world was built just for you —<br>because you deserve the whole universe. 🌌</p>
                 <p class="ending-dua">اللہ تمہیں ہمیشہ خوش رکھے ❤️</p>
 
@@ -24,7 +25,10 @@ function initFireworks() {
                     ${worldPortalHTML()}
                 </div>
 
-                <button class="ending-replay-btn" onclick="Scenes.backToStart()">Replay from Start 🎀</button>
+                <div class="ending-actions">
+                    <button class="ending-share-btn" id="endingShareBtn">Share this World 🔗</button>
+                    <button class="ending-replay-btn" onclick="Scenes.backToStart()">Replay from Start 🎀</button>
+                </div>
             </div>
         </div>
     `;
@@ -47,12 +51,35 @@ function initFireworks() {
     gsap.from(".ending-from",           { y: 30, opacity: 0, duration: 0.8, delay: 0.3 });
     gsap.from(".ending-title",          { y: 40, opacity: 0, duration: 1,   delay: 0.7, ease: "back.out" });
     gsap.from(".ending-name",           { y: 30, opacity: 0, duration: 0.8, delay: 1.1 });
+    gsap.from(".ending-age",            { y: 20, opacity: 0, duration: 0.8, delay: 1.3 });
     gsap.from(".ending-msg",            { y: 20, opacity: 0, duration: 0.8, delay: 1.5 });
     gsap.from(".ending-dua",            { y: 20, opacity: 0, duration: 0.8, delay: 2.0 });
     gsap.from(".ending-portal-section", { y: 30, opacity: 0, duration: 1,   delay: 2.6, ease: "power3.out" });
-    gsap.from(".ending-replay-btn",     { y: 20, opacity: 0, duration: 0.8, delay: 3.2 });
+    gsap.from(".ending-actions",        { y: 20, opacity: 0, duration: 0.8, delay: 3.2 });
 
-    // Attach portal click directly — no setTimeout race condition
+    // Birthday age line — change birth year to Rudaba's actual year
+    const birthYear = 2002;
+    const age = new Date().getFullYear() - birthYear;
+    const ageEl = document.getElementById("endingAge");
+    if (ageEl) ageEl.textContent = `✦ Turning ${age} today ✦`;
+
+    // Share button
+    const shareBtn = document.getElementById("endingShareBtn");
+    if (shareBtn) {
+        shareBtn.addEventListener("click", () => {
+            const url = "https://devghulamasghar.github.io/BirthdayProject/";
+            if (navigator.share) {
+                navigator.share({ title: "Happy Birthday Rudaba 🌸", url });
+            } else {
+                navigator.clipboard.writeText(url).then(() => {
+                    shareBtn.textContent = "Link Copied! ✓";
+                    setTimeout(() => { shareBtn.textContent = "Share this World 🔗"; }, 2500);
+                });
+            }
+        });
+    }
+
+    // Attach portal click directly
     const portalOrb = document.getElementById("worldPortalOrb");
     if (portalOrb) {
         portalOrb.addEventListener("click", enterWorld, { once: true });

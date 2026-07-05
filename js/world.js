@@ -123,6 +123,11 @@ function initWorldScreen() {
     spawnLoveWords();
     animateWorldIn();
 
+    // Sun hint pulse ring
+    const sunHint = document.createElement("div");
+    sunHint.className = "sun-hint-ring";
+    document.getElementById("worldSun").appendChild(sunHint);
+
     // Sun — confetti burst on click
     document.getElementById("worldSun").addEventListener("click", () => {
         confetti({
@@ -164,13 +169,12 @@ function startWorldCanvas() {
         d: (Math.random() > 0.5 ? 1 : -1) * 0.005
     }));
 
-    let running = true;
+    let animId;
 
-    // Stop loop when screen changes
-    document.addEventListener("sceneChanged", () => { running = false; }, { once: true });
+    // Stop loop when screen changes to free memory
+    document.addEventListener("sceneChanged", () => { cancelAnimationFrame(animId); }, { once: true });
 
     (function draw() {
-        if (!running) return;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         stars.forEach(s => {
             s.a += s.d;
@@ -182,7 +186,7 @@ function startWorldCanvas() {
             ctx.shadowColor = "#fff";
             ctx.fill();
         });
-        requestAnimationFrame(draw);
+        animId = requestAnimationFrame(draw);
     })();
 }
 
@@ -210,10 +214,14 @@ function buildOrbits() {
         const planet = document.createElement("div");
         planet.className = "planet";
 
+        // Larger invisible tap area for mobile
+        planet.style.cssText += ";padding:10px;margin:-10px;box-sizing:content-box;";
+
         const img = document.createElement("img");
         img.src     = place.img;
         img.alt     = place.name;
         img.loading = "lazy";
+        img.style.cssText = "width:100%;height:100%;object-fit:cover;border-radius:50%;pointer-events:none;";
 
         planet.appendChild(img);
 
@@ -230,6 +238,13 @@ function buildOrbits() {
             e.stopPropagation();
             openLightbox(place);
         });
+
+        // Touch support
+        planet.addEventListener("touchend", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            openLightbox(place);
+        }, { passive: false });
     });
 }
 

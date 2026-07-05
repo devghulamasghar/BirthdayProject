@@ -95,6 +95,15 @@ class Gallery {
 
         this.container.querySelector("#galleryApologyBtn").addEventListener("click", () => Scenes.show("apologyScreen"));
 
+        // Swipe gesture for mobile
+        const imgWrap = this.container.querySelector(".slide-img-wrap");
+        let touchStartX = 0;
+        imgWrap.addEventListener("touchstart", (e) => { touchStartX = e.touches[0].clientX; }, { passive: true });
+        imgWrap.addEventListener("touchend",   (e) => {
+            const diff = touchStartX - e.changedTouches[0].clientX;
+            if (Math.abs(diff) > 40) diff > 0 ? this.next() : this.prev();
+        }, { passive: true });
+
         gsap.from(".slide-img-wrap", { opacity: 0, scale: .8, duration: 1 });
 
     }

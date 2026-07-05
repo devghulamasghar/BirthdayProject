@@ -507,6 +507,116 @@
     margin-bottom: 8px;
 }
 
+/* ── Ending screen portal section ── */
+.ending-portal-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    margin: 8px 0;
+}
+
+.ending-portal-invite {
+    font-family: 'Great Vibes', cursive;
+    font-size: 28px;
+    background: linear-gradient(135deg, #fff 20%, #c4b5fd 55%, #ff9de2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 14px rgba(139,92,246,.5));
+    margin-bottom: 8px;
+}
+
+/* ── Age line ── */
+.ending-age {
+    font-size: 13px;
+    color: rgba(255,255,255,.4);
+    letter-spacing: 3px;
+}
+
+/* ── Ending actions row ── */
+.ending-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 4px;
+}
+
+.ending-share-btn {
+    background: rgba(6,182,212,.15);
+    border: 1px solid rgba(6,182,212,.35);
+    color: rgba(255,255,255,.8);
+    font-size: 13px;
+    padding: 10px 24px;
+    border-radius: 50px;
+    transition: all .3s;
+}
+
+.ending-share-btn:hover {
+    background: rgba(6,182,212,.3);
+    border-color: rgba(6,182,212,.6);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(6,182,212,.25);
+}
+
+/* ── Typewriter cursor ── */
+.type-cursor {
+    display: inline-block;
+    color: #c9a84c;
+    font-weight: 300;
+    animation: cursorBlink .7s step-end infinite;
+    margin-left: 1px;
+}
+
+#apologyScreen .type-cursor {
+    color: rgba(220,220,220,.6);
+}
+
+@keyframes cursorBlink {
+    0%,100% { opacity: 1; }
+    50%     { opacity: 0; }
+}
+
+/* ── Letter scroll hint ── */
+.letter-body[data-scroll-hint]::after {
+    content: attr(data-scroll-hint);
+    display: block;
+    text-align: center;
+    font-size: 11px;
+    color: rgba(201,168,76,.4);
+    letter-spacing: 2px;
+    margin-top: 16px;
+    animation: hintBlink 2s ease-in-out infinite;
+}
+
+/* ── Sun hint pulse ring ── */
+.sun-hint-ring {
+    position: absolute;
+    inset: -12px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,209,102,.4);
+    animation: sunHintPulse 2s ease-out infinite;
+    pointer-events: none;
+}
+
+@keyframes sunHintPulse {
+    0%   { transform: scale(1);   opacity: .6; }
+    100% { transform: scale(1.8); opacity: 0;  }
+}
+
+/* ── Gallery swipe hint (mobile only) ── */
+@media (max-width: 600px) {
+    .slide-img-wrap::after {
+        content: "← swipe →";
+        display: block;
+        text-align: center;
+        font-size: 11px;
+        color: rgba(255,255,255,.25);
+        letter-spacing: 2px;
+        margin-top: 8px;
+    }
+}
+
 /* ── Responsive ── */
 @media (max-width: 600px) {
     .world-sun { width: 52px; height: 52px; }
