@@ -212,7 +212,7 @@ function releaseWishStars(wish) {
         );
 
         document.getElementById("wishContinueBtn").addEventListener("click", () => {
-            Scenes.show("fireworksScreen");
+            Scenes.show("cakeScreen");
         });
     }, 1400);
 }

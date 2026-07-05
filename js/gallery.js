@@ -25,7 +25,7 @@ class Gallery {
         if (this.container.querySelector(".slideshow")) {
             const doneBtn = this.container.querySelector("#galleryDoneBtn");
             const apologyBtn = this.container.querySelector("#galleryApologyBtn");
-            if (doneBtn) doneBtn.onclick = () => Scenes.show("letterScreen");
+            if (doneBtn) doneBtn.onclick = () => Scenes.show("wishScreen");
             if (apologyBtn) apologyBtn.onclick = () => Scenes.show("apologyScreen");
             return;
         }
@@ -91,7 +91,7 @@ class Gallery {
 
         this.container.querySelector(".next-btn").addEventListener("click", () => this.next());
 
-        this.container.querySelector("#galleryDoneBtn").addEventListener("click", () => Scenes.show("letterScreen"));
+        this.container.querySelector("#galleryDoneBtn").addEventListener("click", () => Scenes.show("wishScreen"));
 
         this.container.querySelector("#galleryApologyBtn").addEventListener("click", () => Scenes.show("apologyScreen"));
 
