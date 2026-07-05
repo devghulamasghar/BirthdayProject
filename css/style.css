@@ -65,6 +65,10 @@ body{
 
     height:100vh;
 
+    /* Prevent text selection on tap for a cleaner mobile feel */
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+
 }
 
 /* =========================

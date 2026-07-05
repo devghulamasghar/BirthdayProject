@@ -19,7 +19,7 @@ let width;
 let height;
 
 const stars = [];
-const STAR_COUNT = 450;
+const STAR_COUNT = window.innerWidth < 600 ? 200 : 450;
 
 const mouse = {
     x: window.innerWidth / 2,
@@ -218,6 +218,15 @@ window.addEventListener("mousemove", e => {
 
 });
 
+// Touch support for mobile
+window.addEventListener("touchmove", e => {
+
+    mouse.x = e.touches[0].clientX;
+
+    mouse.y = e.touches[0].clientY;
+
+}, { passive: true });
+
 // =========================================
 // Background
 // =========================================
@@ -254,11 +263,11 @@ function drawBackground() {
 
 function drawMoon() {
 
-    const moonX = width - 180;
+    const moonX = Math.min(width - 80, width - 180);
 
     const moonY = 130;
 
-    const moonRadius = 55;
+    const moonRadius = window.innerWidth < 600 ? 35 : 55;
 
     ctx.beginPath();
 

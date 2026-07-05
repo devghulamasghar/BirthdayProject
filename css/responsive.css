@@ -49,8 +49,43 @@
     .letter-body { padding: 36px 22px 28px; }
     #letterContent, #apologyContent { font-size: 14px; line-height: 2; }
 
-    /* Global nav */
+    /* Cake screen */
+    .cake-screen-wrap { padding: 20px 16px; }
+    .cake-instruction { font-size: 14px; }
+    .big-cake-top { gap: 8px; }
+    .big-candle { width: 14px; height: 50px; }
+    .big-flame { width: 16px; height: 20px; }
+    .big-cake-mid { height: 55px; width: 200px; }
+    .big-cake-base { height: 40px; width: 230px; }
+    .big-cake-plate { width: 260px; height: 18px; }
+    .cake-sub { font-size: 15px; margin-top: 18px; }
+
+    /* Fireworks / Ending screen */
+    .ending-title { font-size: 52px; }
+    .ending-name  { font-size: 28px; }
+    .ending-msg   { font-size: 13px; padding: 0 12px; }
+    .ending-dua   { font-size: 14px; }
+    .ending-replay-btn { font-size: 14px; padding: 12px 28px; }
+
+    /* Global nav — bigger tap targets on mobile */
     #globalNav { top: 12px; left: 12px; }
-    #globalBackBtn, #globalHomeBtn { width: 40px; height: 40px; font-size: 17px; }
+    #globalBackBtn, #globalHomeBtn { width: 44px; height: 44px; font-size: 18px; }
+
+    /* Prevent hover effects firing as sticky on touch */
+    button:hover { transform: none; box-shadow: none; }
+    .slide-btn:hover { transform: none; box-shadow: none; background: rgba(255,255,255,.08); }
+
+}
+
+/* Landscape mobile */
+@media (max-width: 900px) and (orientation: landscape) {
+
+    .letter-page { height: 92vh; }
+    .letter-body { padding: 28px 20px 20px; }
+    #storyText { font-size: 26px; min-height: 120px; }
+    .portal-title { font-size: 36px; margin-top: 16px; }
+    #portal { width: 160px; height: 160px; }
+    .portal-core { width: 60px; height: 60px; }
+    .loading-content h1 { font-size: 42px; }
 
 }

@@ -11,6 +11,20 @@ const myChoiceCard  = document.getElementById("myChoiceCard");
 const myChoiceList  = document.getElementById("myChoiceList");
 const songContinueBtn = document.getElementById("songContinueBtn");
 
+document.addEventListener("sceneChanged", (e) => {
+    if (e.detail === "musicScreen") {
+        // Reset card selections and sub-list on replay
+        document.querySelectorAll(".music-card").forEach(c => c.classList.remove("selected"));
+        document.querySelectorAll(".song-item").forEach(s => {
+            s.classList.remove("playing");
+            s.querySelector(".song-item-hint").textContent = "play";
+        });
+        myChoiceList.classList.remove("open");
+        myChoiceCard.querySelector(".my-choice-arrow").style.transform = "";
+        songContinueBtn.style.display = "none";
+    }
+});
+
 /* ── Regular cards (birthday, piano, silent) ── */
 document.querySelectorAll(".music-card:not(#myChoiceCard)").forEach(card => {
 

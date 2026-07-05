@@ -28,17 +28,49 @@ May Allah bless you with happiness, success, good health, peace, and countless r
 
 — Ghulam Asghar`;
 
-const envelope = document.getElementById("envelope");
-const letterScreen = document.getElementById("letterScreen");
+// Re-initialize every time the screen becomes active
+document.addEventListener("sceneChanged", (e) => {
+    if (e.detail === "letterScreen") initLetterScreen();
+});
 
-if (envelope) {
-    envelope.addEventListener("click", openLetter);
+function initLetterScreen() {
+
+    const screen = document.getElementById("letterScreen");
+
+    screen.innerHTML = `
+        <div class="letter-container">
+            <div id="envelope">
+                <div class="envelope-back"></div>
+                <div class="envelope-flap"></div>
+                <div class="wax-seal">❤️</div>
+                <div class="letter-paper"><div id="letterContent"></div></div>
+            </div>
+        </div>
+        <p class="envelope-hint">Click the envelope to open 💌</p>
+    `;
+
+    const env = document.getElementById("envelope");
+
+    gsap.fromTo(env,
+        { y: 300, opacity: 0, scale: 0.7 },
+        { y: 0, opacity: 1, scale: 1, duration: 1.2, ease: "back.out(1.4)",
+          onComplete: () => {
+              gsap.to(env, { y: -12, duration: 1.8, ease: "sine.inOut", yoyo: true, repeat: -1 });
+              env.addEventListener("click", openLetter, { once: true });
+          }
+        }
+    );
 }
 
 function openLetter() {
 
-    // Remove click so it doesn't fire twice
-    envelope.removeEventListener("click", openLetter);
+    const env = document.getElementById("envelope");
+    const screen = document.getElementById("letterScreen");
+
+    gsap.killTweensOf(env);
+
+    const hint = screen.querySelector(".envelope-hint");
+    if (hint) gsap.to(hint, { opacity: 0, duration: 0.3 });
 
     gsap.timeline()
 
@@ -67,7 +99,9 @@ function openLetter() {
 
 function showLetterPage() {
 
-    letterScreen.innerHTML = `
+    const screen = document.getElementById("letterScreen");
+
+    screen.innerHTML = `
         <div class="letter-page">
             <div class="letter-border-wrap">
                 <div class="letter-corner tl"></div>
@@ -94,6 +128,7 @@ function showLetterPage() {
 
 function typeLetter() {
 
+    const screen = document.getElementById("letterScreen");
     const content = document.getElementById("letterContent");
     content.innerHTML = "";
 
@@ -103,11 +138,7 @@ function typeLetter() {
 
         const char = LETTER.charAt(i);
 
-        if (char === "\n") {
-            content.innerHTML += "<br>";
-        } else {
-            content.innerHTML += char;
-        }
+        content.innerHTML += char === "\n" ? "<br>" : char;
 
         i++;
 
@@ -115,8 +146,7 @@ function typeLetter() {
 
         if (i >= LETTER.length) {
             clearInterval(timer);
-            // Show cake button
-            const btn = letterScreen.querySelector(".letter-back-wrap");
+            const btn = screen.querySelector(".letter-back-wrap");
             if (btn) gsap.fromTo(btn, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.6 });
         }
 

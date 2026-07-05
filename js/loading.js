@@ -101,6 +101,11 @@ function leaveLoadingScreen() {
         opacity: 0,
         duration: 1.4,
         ease: "power2.inOut",
-        onComplete: () => Scenes.show("nameScreen")
+        onComplete: () => {
+            // Clean up particle nodes to free memory
+            const container = document.getElementById("loadParticles");
+            if (container) container.innerHTML = "";
+            Scenes.show("nameScreen");
+        }
     });
 }

@@ -34,7 +34,8 @@ class Gallery {
 
         if (!portal) return;
 
-        portal.addEventListener("click", () => this.openGallery());
+        // Use { once: true } so the listener never stacks on revisit
+        portal.addEventListener("click", () => this.openGallery(), { once: true });
 
     }
 

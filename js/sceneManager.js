@@ -168,6 +168,14 @@ class SceneManager {
 
         this.history = [];
 
+        // Stop and reset music so replay starts fresh
+        const music = document.getElementById("bgMusic");
+        if (music) {
+            music.pause();
+            music.currentTime = 0;
+            music.src = "";
+        }
+
         this.show("nameScreen");
 
     }

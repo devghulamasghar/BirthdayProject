@@ -78,6 +78,7 @@ function nextStory(){
 
 function startStory() {
     currentLine = 0;
+    nextBtn.style.display = "none";
     typeStory(storyLines[0]);
 }
 
