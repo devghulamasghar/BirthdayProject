@@ -199,7 +199,7 @@ function releaseWishStars(wish) {
 
     // Confetti burst
     confetti({
-        particleCount: 100,
+        particleCount: window.innerWidth < 768 ? 50 : 100,
         spread: 360,
         startVelocity: 25,
         origin: { x: 0.5, y: 0.5 },

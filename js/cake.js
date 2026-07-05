@@ -55,7 +55,7 @@ function initCakeScreen() {
                 sub.textContent = "🎉 Wish made! Happy Birthday Rudaba! 🌸";
                 gsap.fromTo(sub, { scale: 0.8 }, { scale: 1, duration: 0.5, ease: "back.out" });
                 // Confetti burst
-                confetti({ particleCount: 180, spread: 100, origin: { y: 0.6 },
+                confetti({ particleCount: window.innerWidth < 768 ? 80 : 180, spread: 100, origin: { y: 0.6 },
                     colors: ["#8B5CF6","#FF4D8D","#FFD166","#ff9de2","#fff"] });
                 setTimeout(() => Scenes.show("wishScreen"), 2800);
             } else {

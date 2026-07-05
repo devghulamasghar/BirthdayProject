@@ -159,7 +159,7 @@ function startWorldCanvas() {
 
     const ctx    = canvas.getContext("2d");
     const mobile = window.innerWidth < 600;
-    const COUNT  = mobile ? 180 : 380;
+    const COUNT  = mobile ? 80 : 380;
 
     canvas.width  = window.innerWidth;
     canvas.height = window.innerHeight;
@@ -179,14 +179,13 @@ function startWorldCanvas() {
 
     (function draw() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.shadowBlur = 0;
         stars.forEach(s => {
             s.a += s.d;
             if (s.a > 1 || s.a < 0.1) s.d *= -1;
             ctx.beginPath();
             ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
             ctx.fillStyle = `rgba(255,255,255,${s.a})`;
-            ctx.shadowBlur = 6;
-            ctx.shadowColor = "#fff";
             ctx.fill();
         });
         animId = requestAnimationFrame(draw);
@@ -195,6 +194,8 @@ function startWorldCanvas() {
 
 // ── Aurora Borealis canvas ──
 function startAurora() {
+    // Skip on mobile — too GPU intensive
+    if (window.innerWidth < 768) return;
 
     const canvas = document.getElementById("auroraCanvas");
     if (!canvas) return;

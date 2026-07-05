@@ -19,7 +19,8 @@ let width;
 let height;
 
 const stars = [];
-const STAR_COUNT = window.innerWidth < 600 ? 200 : 450;
+const STAR_COUNT = window.innerWidth < 600 ? 80 : 450;
+const isMobile = window.innerWidth < 600;
 
 const mouse = {
     x: window.innerWidth / 2,
@@ -98,9 +99,10 @@ class Star {
 
         ctx.fillStyle = `rgba(255,255,255,${this.alpha})`;
 
-        ctx.shadowBlur = 10;
-
-        ctx.shadowColor = "#ffffff";
+        if (!isMobile) {
+            ctx.shadowBlur = 10;
+            ctx.shadowColor = "#ffffff";
+        }
 
         ctx.fill();
 
@@ -190,9 +192,10 @@ class ShootingStar {
 
         ctx.lineWidth = 2;
 
-        ctx.shadowBlur = 15;
-
-        ctx.shadowColor = "#ffffff";
+        if (!isMobile) {
+            ctx.shadowBlur = 15;
+            ctx.shadowColor = "#ffffff";
+        }
 
         ctx.stroke();
 
@@ -200,7 +203,7 @@ class ShootingStar {
 
 }
 
-for (let i = 0; i < 3; i++) {
+for (let i = 0; i < (isMobile ? 1 : 3); i++) {
 
     shootingStars.push(new ShootingStar());
 
@@ -295,9 +298,10 @@ function drawMoon() {
 
     ctx.fillStyle = gradient;
 
-    ctx.shadowBlur = 40;
-
-    ctx.shadowColor = "#ffffff";
+    if (!isMobile) {
+        ctx.shadowBlur = 40;
+        ctx.shadowColor = "#ffffff";
+    }
 
     ctx.fill();
 

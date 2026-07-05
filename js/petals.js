@@ -3,12 +3,15 @@
     const petals = ["🌸", "🌺", "✨", "🌷", "💮"];
     const container = document.createElement("div");
     container.id = "petalsContainer";
-    container.style.cssText = "position:fixed;inset:0;pointer-events:none;z-index:99998;overflow:hidden;";
+    container.style.cssText = "position:fixed;top:0;left:0;right:0;bottom:0;pointer-events:none;z-index:99998;overflow:hidden;";
     document.body.appendChild(container);
 
     const MAX    = 30;
-    const mobile = window.innerWidth < 600;
-    const RATE   = mobile ? 1200 : 700;
+    const mobile = window.innerWidth < 768;
+    const RATE   = mobile ? 2000 : 700;
+
+    // Disable petals on mobile to save performance
+    if (mobile) return;
 
     function spawnPetal() {
         if (container.children.length >= MAX) return;
