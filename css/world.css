@@ -1,0 +1,412 @@
+/* ==========================================================
+   PROJECT AURORA — World of Love
+   Galaxy World Screen
+========================================================== */
+
+/* ── Canvas ── */
+#worldCanvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+/* ── Warp tunnel overlay ── */
+#warpOverlay {
+    position: fixed;
+    inset: 0;
+    z-index: 99990;
+    pointer-events: none;
+    opacity: 0;
+    background: radial-gradient(ellipse at center,
+        #fff 0%,
+        #c4b5fd 15%,
+        #8B5CF6 35%,
+        #FF4D8D 55%,
+        #020617 80%,
+        #000 100%
+    );
+}
+
+/* ── World screen wrapper ── */
+#worldScreen {
+    overflow: hidden;
+}
+
+.world-wrap {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+}
+
+/* ── World portal (entry point on gallery screen) ── */
+.world-portal-wrap {
+    text-align: center;
+    margin-top: 24px;
+}
+
+.world-portal-btn {
+    background: linear-gradient(135deg, rgba(6,182,212,.25), rgba(139,92,246,.25));
+    border: 1px solid rgba(6,182,212,.5);
+    color: #fff;
+    font-size: 14px;
+    padding: 12px 30px;
+    border-radius: 50px;
+    cursor: pointer;
+    letter-spacing: 1px;
+    box-shadow: 0 0 30px rgba(6,182,212,.2), 0 0 60px rgba(139,92,246,.1);
+    transition: all .35s;
+    position: relative;
+    overflow: hidden;
+}
+
+.world-portal-btn::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: 50px;
+    background: linear-gradient(135deg, #06b6d4, #8B5CF6, #FF4D8D, #06b6d4);
+    background-size: 300% 300%;
+    animation: borderFlow 3s linear infinite;
+    z-index: -1;
+    opacity: 0.6;
+}
+
+@keyframes borderFlow {
+    0%   { background-position: 0% 50%;   }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%;   }
+}
+
+.world-portal-btn:hover {
+    transform: translateY(-4px) scale(1.04);
+    box-shadow: 0 0 50px rgba(6,182,212,.5), 0 0 100px rgba(139,92,246,.3);
+}
+
+/* ── Solar system container ── */
+.solar-system {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}
+
+/* ── Sun (center) ── */
+.world-sun {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #fff 0%, #FFD166 30%, #ff6b00 70%, #c2410c 100%);
+    box-shadow:
+        0 0 40px #FFD166,
+        0 0 80px rgba(255,209,102,.6),
+        0 0 140px rgba(255,107,0,.3);
+    animation: sunPulse 3s ease-in-out infinite;
+    z-index: 5;
+    cursor: pointer;
+    pointer-events: all;
+}
+
+@keyframes sunPulse {
+    0%,100% { box-shadow: 0 0 40px #FFD166, 0 0 80px rgba(255,209,102,.6), 0 0 140px rgba(255,107,0,.3); }
+    50%     { box-shadow: 0 0 60px #FFD166, 0 0 120px rgba(255,209,102,.8), 0 0 200px rgba(255,107,0,.5); }
+}
+
+/* ── Orbit rings ── */
+.orbit {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,.08);
+    animation: orbitRotate linear infinite;
+    pointer-events: none;
+}
+
+.orbit-1 { width: 200px; height: 200px; animation-duration: 12s;  border-color: rgba(139,92,246,.2); }
+.orbit-2 { width: 320px; height: 320px; animation-duration: 20s;  border-color: rgba(255,77,141,.15); }
+.orbit-3 { width: 450px; height: 450px; animation-duration: 30s;  border-color: rgba(6,182,212,.12); animation-direction: reverse; }
+.orbit-4 { width: 590px; height: 590px; animation-duration: 42s;  border-color: rgba(255,209,102,.1); }
+.orbit-5 { width: 740px; height: 740px; animation-duration: 58s;  border-color: rgba(139,92,246,.08); animation-direction: reverse; }
+.orbit-6 { width: 900px; height: 900px; animation-duration: 75s;  border-color: rgba(255,77,141,.06); }
+
+@keyframes orbitRotate {
+    from { transform: rotate(0deg);   }
+    to   { transform: rotate(360deg); }
+}
+
+/* ── Planet wrapper (keeps planet upright while orbit rotates) ── */
+.planet-wrap {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    pointer-events: all;
+}
+
+/* ── Planet ── */
+.planet {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: 0 0 20px rgba(139,92,246,.5), 0 0 40px rgba(0,0,0,.6);
+    transition: transform .3s, box-shadow .3s;
+    border: 2px solid rgba(255,255,255,.2);
+    animation: counterRotate linear infinite;
+}
+
+.orbit-1 .planet { animation-duration: 12s; }
+.orbit-2 .planet { animation-duration: 20s; }
+.orbit-3 .planet { animation-duration: 30s; }
+.orbit-4 .planet { animation-duration: 42s; }
+.orbit-5 .planet { animation-duration: 58s; }
+.orbit-6 .planet { animation-duration: 75s; }
+
+@keyframes counterRotate {
+    from { transform: rotate(0deg);    }
+    to   { transform: rotate(-360deg); }
+}
+
+.planet img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none;
+}
+
+.planet:hover {
+    transform: scale(1.5) rotate(0deg) !important;
+    box-shadow: 0 0 40px rgba(255,209,102,.8), 0 0 80px rgba(255,77,141,.5);
+    z-index: 100;
+}
+
+/* ── Planet label tooltip ── */
+.planet-label {
+    position: absolute;
+    bottom: -26px;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    font-size: 10px;
+    color: rgba(255,255,255,.7);
+    letter-spacing: 1px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity .3s;
+}
+
+.planet:hover + .planet-label,
+.planet-wrap:hover .planet-label {
+    opacity: 1;
+}
+
+/* ── World title overlay ── */
+.world-title-wrap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    padding-top: 32px;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.world-title {
+    font-family: 'Great Vibes', cursive;
+    font-size: 52px;
+    background: linear-gradient(135deg, #fff 20%, #FFD166 50%, #ff9de2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 20px rgba(255,209,102,.4));
+    animation: titleFloat 4s ease-in-out infinite;
+}
+
+.world-subtitle {
+    font-size: 12px;
+    color: rgba(255,255,255,.35);
+    letter-spacing: 3px;
+    margin-top: 4px;
+}
+
+@keyframes titleFloat {
+    0%,100% { transform: translateY(0);   }
+    50%     { transform: translateY(-6px); }
+}
+
+/* ── Love words floating ── */
+.love-word {
+    position: absolute;
+    font-size: 13px;
+    color: rgba(255,255,255,.18);
+    letter-spacing: 2px;
+    pointer-events: none;
+    animation: loveFloat linear infinite;
+    white-space: nowrap;
+}
+
+@keyframes loveFloat {
+    0%   { transform: translateY(0)   rotate(var(--r)); opacity: 0;   }
+    10%  { opacity: .18; }
+    90%  { opacity: .18; }
+    100% { transform: translateY(-100vh) rotate(var(--r)); opacity: 0; }
+}
+
+/* ── Image lightbox ── */
+.world-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 99995;
+    background: rgba(0,0,0,.92);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .4s;
+}
+
+.world-lightbox.open {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.world-lightbox img {
+    max-width: 88vw;
+    max-height: 70vh;
+    border-radius: 20px;
+    box-shadow: 0 0 80px rgba(139,92,246,.4), 0 0 160px rgba(255,77,141,.2);
+    object-fit: cover;
+}
+
+.world-lightbox-name {
+    font-family: 'Great Vibes', cursive;
+    font-size: 36px;
+    color: #FFD166;
+    filter: drop-shadow(0 0 12px rgba(255,209,102,.5));
+}
+
+.world-lightbox-desc {
+    font-size: 13px;
+    color: rgba(255,255,255,.5);
+    letter-spacing: 2px;
+    text-align: center;
+    max-width: 400px;
+}
+
+.world-lightbox-close {
+    position: absolute;
+    top: 24px;
+    right: 28px;
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.15);
+    color: white;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0;
+    transition: all .3s;
+}
+
+.world-lightbox-close:hover {
+    background: rgba(255,77,141,.3);
+    transform: rotate(90deg);
+}
+
+/* ── Bottom nav ── */
+.world-bottom-nav {
+    position: absolute;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.world-nav-btn {
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.12);
+    color: rgba(255,255,255,.7);
+    font-size: 13px;
+    padding: 10px 24px;
+    border-radius: 50px;
+    backdrop-filter: blur(16px);
+    transition: all .3s;
+}
+
+.world-nav-btn:hover {
+    background: rgba(139,92,246,.25);
+    border-color: rgba(139,92,246,.5);
+    color: #fff;
+    transform: translateY(-3px);
+}
+
+/* ── Aurora nebula blobs ── */
+.world-nebula {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    pointer-events: none;
+    animation: nebulaBreath 8s ease-in-out infinite;
+}
+
+.world-nebula-1 {
+    width: 500px; height: 500px;
+    background: rgba(139,92,246,.12);
+    top: -150px; left: -150px;
+    animation-delay: 0s;
+}
+
+.world-nebula-2 {
+    width: 400px; height: 400px;
+    background: rgba(255,77,141,.1);
+    bottom: -100px; right: -100px;
+    animation-delay: 3s;
+}
+
+.world-nebula-3 {
+    width: 300px; height: 300px;
+    background: rgba(6,182,212,.08);
+    top: 40%; left: 40%;
+    animation-delay: 6s;
+}
+
+@keyframes nebulaBreath {
+    0%,100% { opacity: .6; transform: scale(1);    }
+    50%     { opacity: 1;  transform: scale(1.15); }
+}
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+    .world-sun { width: 52px; height: 52px; }
+    .orbit-1 { width: 130px; height: 130px; }
+    .orbit-2 { width: 210px; height: 210px; }
+    .orbit-3 { width: 295px; height: 295px; }
+    .orbit-4 { width: 385px; height: 385px; }
+    .orbit-5 { width: 480px; height: 480px; }
+    .orbit-6 { width: 580px; height: 580px; }
+    .planet  { width: 38px; height: 38px; }
+    .world-title { font-size: 36px; }
+    .world-lightbox img { max-height: 55vh; }
+    .world-lightbox-name { font-size: 28px; }
+    .world-bottom-nav { bottom: 16px; gap: 8px; }
+    .world-nav-btn { font-size: 12px; padding: 8px 18px; }
+}
