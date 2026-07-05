@@ -127,6 +127,12 @@ function sealWish() {
     const sealBtn = document.getElementById("wishSealBtn");
     sealBtn.disabled = true;
 
+    // Send wish via EmailJS
+    emailjs.send("service_p6pdu4o", "template_hwa3tl6", {
+        wish_message: wish,
+        sent_at: new Date().toLocaleString()
+    });
+
     // 1 — wish text floats into jar
     gsap.to(".wish-input-section", { y: 20, opacity: 0, duration: 0.5 });
 
