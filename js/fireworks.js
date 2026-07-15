@@ -70,8 +70,8 @@ function initFireworks() {
     const countdownEl = document.getElementById("endingCountdown");
     if (countdownEl) {
         const now        = new Date();
-        const birthMonth = 0; // ← change to Rudaba's birth month (0 = Jan)
-        const birthDay   = 1; // ← change to Rudaba's birth day
+        const birthMonth = 6; // July (0-indexed)
+        const birthDay   = 16;
         let next = new Date(now.getFullYear(), birthMonth, birthDay);
         if (next <= now) next.setFullYear(next.getFullYear() + 1);
         const days = Math.ceil((next - now) / (1000 * 60 * 60 * 24));
