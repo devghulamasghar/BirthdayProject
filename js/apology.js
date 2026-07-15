@@ -34,8 +34,8 @@ I am truly, deeply, and sincerely sorry.
 
 — Ghulam Asghar`;
 
-const apologyEnvelope = document.getElementById("apologyEnvelope");
-const apologyScreen  = document.getElementById("apologyScreen");
+// Use live queries — stale const refs break after innerHTML wipe
+const apologyScreen = document.getElementById("apologyScreen");
 
 // Called by SceneManager when this screen becomes active
 function initApologyScreen() {
@@ -75,10 +75,10 @@ document.addEventListener("sceneChanged", (e) => {
 
 function openApology() {
 
+    // Re-query after innerHTML rebuild — stale const reference would be null
     const env = document.getElementById("apologyEnvelope");
+    if (!env) return;
     env.removeEventListener("click", openApology);
-
-    // Stop the float
     gsap.killTweensOf(env);
 
     // Hide hint

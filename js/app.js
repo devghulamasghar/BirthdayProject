@@ -59,6 +59,37 @@ window.addEventListener("load", () => {
 
     Aurora.started = true;
 
+    // Inject aurora layer
+    const auroraLayer = document.createElement("div");
+    auroraLayer.id = "auroraLayer";
+    auroraLayer.innerHTML = `
+        <div class="aurora-blob a1"></div>
+        <div class="aurora-blob a2"></div>
+        <div class="aurora-blob a3"></div>
+    `;
+    document.body.appendChild(auroraLayer);
+
+    // Cursor glow trail
+    const glow = document.createElement("div");
+    glow.id = "cursorGlow";
+    document.body.appendChild(glow);
+
+    let cx = window.innerWidth / 2, cy = window.innerHeight / 2;
+    let tx = cx, ty = cy;
+
+    window.addEventListener("mousemove", e => { tx = e.clientX; ty = e.clientY; });
+
+    (function animateCursor() {
+        cx += (tx - cx) * 0.12;
+        cy += (ty - cy) * 0.12;
+        glow.style.left = cx + "px";
+        glow.style.top  = cy + "px";
+        requestAnimationFrame(animateCursor);
+    })();
+
+    // Hide cursor glow on touch devices
+    window.addEventListener("touchstart", () => { glow.style.opacity = "0"; }, { once: true });
+
     startLoadingAnimation();
 
 });

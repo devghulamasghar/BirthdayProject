@@ -3,7 +3,7 @@
     const petals = ["🌸", "🌺", "✨", "🌷", "💮"];
     const container = document.createElement("div");
     container.id = "petalsContainer";
-    container.style.cssText = "position:fixed;top:0;left:0;right:0;bottom:0;pointer-events:none;z-index:99998;overflow:hidden;";
+    container.style.cssText = "position:fixed;top:0;left:0;right:0;bottom:0;pointer-events:none;z-index:9000;overflow:hidden;";
     document.body.appendChild(container);
 
     const MAX    = 30;

@@ -40,28 +40,22 @@ class Gallery {
 
     openGallery() {
 
+        const screen = document.getElementById("galleryScreen");
+        // Clear any GSAP inline styles so portal animation has clean slate
+        gsap.killTweensOf(screen);
+        gsap.set(screen, { clearProps: "all" });
+
         gsap.timeline()
-
             .to("#portal", {
-
-                scale: 7,
-
-                rotation: 720,
-
-                duration: 2,
-
-                ease: "power4.inOut"
-
-            })
-
-            .to(".portal-container", {
-
+                scale: 8,
                 opacity: 0,
-
-                duration: .8
-
-            }, "-=.8")
-
+                duration: 0.9,
+                ease: "power3.in"
+            })
+            .to(".portal-container p, .portal-title", {
+                opacity: 0,
+                duration: 0.3
+            }, 0)
             .call(() => this.renderSlideshow());
 
     }
@@ -74,7 +68,7 @@ class Gallery {
                 <div class="slide-wrapper">
                     <button class="slide-btn prev-btn">&#8592;</button>
                     <div class="slide-img-wrap">
-                        <img id="slideImg" src="${this.images[0]}" alt="Artwork 1">
+                        <img id="slideImg" src="${this.images[0]}" alt="Artwork 1" loading="eager">
                     </div>
                     <button class="slide-btn next-btn">&#8594;</button>
                 </div>
@@ -86,21 +80,24 @@ class Gallery {
         `;
 
         this.container.querySelector(".prev-btn").addEventListener("click", () => this.prev());
-
         this.container.querySelector(".next-btn").addEventListener("click", () => this.next());
-
         this.container.querySelector("#galleryDoneBtn").addEventListener("click", () => Scenes.show("letterScreen"));
 
         // Swipe gesture for mobile
         const imgWrap = this.container.querySelector(".slide-img-wrap");
         let touchStartX = 0;
         imgWrap.addEventListener("touchstart", (e) => { touchStartX = e.touches[0].clientX; }, { passive: true });
-        imgWrap.addEventListener("touchend",   (e) => {
+        imgWrap.addEventListener("touchend", (e) => {
             const diff = touchStartX - e.changedTouches[0].clientX;
             if (Math.abs(diff) > 40) diff > 0 ? this.next() : this.prev();
         }, { passive: true });
 
-        gsap.from(".slide-img-wrap", { opacity: 0, scale: .8, duration: 1 });
+        // Wait one frame for DOM to paint before animating
+        requestAnimationFrame(() => {
+            gsap.fromTo(".slideshow", { opacity: 0 }, { opacity: 1, duration: 0.5 });
+            gsap.fromTo(".slide-img-wrap", { opacity: 0, scale: .88, y: 20 }, { opacity: 1, scale: 1, y: 0, duration: 0.7, ease: "power3.out" });
+            gsap.fromTo(".gallery-title",  { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.6, delay: 0.15 });
+        });
 
     }
 

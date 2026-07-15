@@ -19,8 +19,16 @@ let width;
 let height;
 
 const stars = [];
-const STAR_COUNT = window.innerWidth < 600 ? 80 : 450;
+const STAR_COUNT = window.innerWidth < 600 ? 120 : 700;
 const isMobile = window.innerWidth < 600;
+
+const STAR_COLORS = [
+    "255,255,255",
+    "165,243,252",  // soft blue
+    "253,230,138",  // soft gold
+    "216,180,254",  // soft purple
+    "255,182,255"   // soft pink
+];
 
 const mouse = {
     x: window.innerWidth / 2,
@@ -35,6 +43,7 @@ function resizeCanvas() {
 
     width = canvas.width = window.innerWidth;
     height = canvas.height = window.innerHeight;
+    bgGradient = null; // invalidate cached gradient on resize
 
 }
 
@@ -60,13 +69,15 @@ class Star {
 
         this.y = Math.random() * height;
 
-        this.radius = Math.random() * 2 + 0.5;
+        this.radius = Math.random() * 2 + 0.3;
 
         this.alpha = Math.random();
 
-        this.speed = Math.random() * 0.15 + 0.02;
+        this.speed = Math.random() * 0.12 + 0.01;
 
-        this.twinkle = Math.random() * 0.02;
+        this.twinkle = Math.random() * 0.018;
+
+        this.color = STAR_COLORS[Math.floor(Math.random() * STAR_COLORS.length)];
 
     }
 
@@ -97,12 +108,7 @@ class Star {
 
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
 
-        ctx.fillStyle = `rgba(255,255,255,${this.alpha})`;
-
-        if (!isMobile) {
-            ctx.shadowBlur = 10;
-            ctx.shadowColor = "#ffffff";
-        }
+        ctx.fillStyle = `rgba(${this.color},${this.alpha})`;
 
         ctx.fill();
 
@@ -127,6 +133,32 @@ function createStars() {
 }
 
 createStars();
+
+// Batch-draw glowing stars once per frame using a single shadowBlur pass
+function drawStars() {
+    // Pass 1: all stars without shadow (fast)
+    stars.forEach(star => {
+        star.update();
+        star.draw();
+    });
+
+    // Pass 2: only large stars get glow (desktop only, max 60 stars)
+    if (!isMobile) {
+        ctx.save();
+        ctx.shadowBlur = 10;
+        const glowStars = stars.filter(s => s.radius > 1.5);
+        const limit = Math.min(glowStars.length, 60);
+        for (let i = 0; i < limit; i++) {
+            const s = glowStars[i];
+            ctx.shadowColor = `rgba(${s.color},0.9)`;
+            ctx.beginPath();
+            ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(${s.color},${s.alpha})`;
+            ctx.fill();
+        }
+        ctx.restore();
+    }
+}
 
 // =========================================
 // Shooting Stars
@@ -234,28 +266,19 @@ window.addEventListener("touchmove", e => {
 // Background
 // =========================================
 
+// Cache gradient — recreating every frame causes GC pressure
+let bgGradient = null;
+
 function drawBackground() {
 
-    const gradient = ctx.createLinearGradient(
+    if (!bgGradient) {
+        bgGradient = ctx.createLinearGradient(0, 0, 0, height);
+        bgGradient.addColorStop(0,   "#020617");
+        bgGradient.addColorStop(.5,  "#071321");
+        bgGradient.addColorStop(1,   "#000000");
+    }
 
-        0,
-
-        0,
-
-        0,
-
-        height
-
-    );
-
-    gradient.addColorStop(0, "#020617");
-
-    gradient.addColorStop(.5, "#071321");
-
-    gradient.addColorStop(1, "#000000");
-
-    ctx.fillStyle = gradient;
-
+    ctx.fillStyle = bgGradient;
     ctx.fillRect(0, 0, width, height);
 
 }
@@ -308,6 +331,49 @@ function drawMoon() {
 }
 
 // =========================================
+// Aurora Blobs on Canvas
+// =========================================
+
+const auroraBlobs = [
+    { x: -100, y: -80,  w: 700, h: 500, color: "139,92,246",  alpha: 0, phase: 0,    speed: 0.008 },
+    { x: null, y: null, w: 600, h: 600, color: "255,77,141",  alpha: 0, phase: 2.1,  speed: 0.006 },
+    { x: null, y: null, w: 500, h: 400, color: "6,182,212",   alpha: 0, phase: 4.2,  speed: 0.01  }
+];
+
+function initAuroraBlobs() {
+    auroraBlobs[1].x = width - 200;
+    auroraBlobs[1].y = height - 200;
+    auroraBlobs[2].x = width * 0.4;
+    auroraBlobs[2].y = height * 0.4;
+}
+
+initAuroraBlobs();
+window.addEventListener("resize", initAuroraBlobs);
+
+function drawAuroraBlobs() {
+    if (isMobile) return;
+    auroraBlobs.forEach(b => {
+        b.phase += b.speed;
+        const ox = Math.sin(b.phase) * 60;
+        const oy = Math.cos(b.phase * 0.7) * 50;
+        const grad = ctx.createRadialGradient(
+            b.x + ox, b.y + oy, 0,
+            b.x + ox, b.y + oy, Math.max(b.w, b.h) / 2
+        );
+        grad.addColorStop(0,   `rgba(${b.color},.13)`);
+        grad.addColorStop(0.5, `rgba(${b.color},.06)`);
+        grad.addColorStop(1,   `rgba(${b.color},0)`);
+        ctx.save();
+        ctx.globalCompositeOperation = "screen";
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.ellipse(b.x + ox, b.y + oy, b.w / 2, b.h / 2, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+    });
+}
+
+// =========================================
 // Animation Loop
 // =========================================
 
@@ -317,15 +383,11 @@ function animateGalaxy() {
 
     drawBackground();
 
+    drawAuroraBlobs();
+
     drawMoon();
 
-    stars.forEach(star => {
-
-        star.update();
-
-        star.draw();
-
-    });
+    drawStars();
 
     shootingStars.forEach(star => {
 

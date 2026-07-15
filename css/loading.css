@@ -13,6 +13,10 @@
     overflow: hidden;
 }
 
+#loadingScreen:not(.active) {
+    display: none;
+}
+
 /* ── Ambient glow blobs ── */
 #loadingScreen::before {
     content: "";
@@ -233,10 +237,11 @@
 /* ── Progress bar ── */
 .load-bar-wrap {
     width: 220px;
-    height: 3px;
-    background: rgba(255,255,255,.1);
+    height: 6px;
+    background: rgba(255,255,255,.08);
     border-radius: 10px;
     overflow: hidden;
+    position: relative;
 }
 
 .load-bar {
@@ -244,8 +249,32 @@
     width: 0%;
     background: linear-gradient(90deg, #8B5CF6, #FF4D8D, #FFD166);
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(255,77,141,.6);
+    box-shadow: 0 0 14px rgba(255,77,141,.7), 0 0 28px rgba(139,92,246,.4);
     transition: width .1s linear;
+    position: relative;
+    overflow: hidden;
+}
+
+.load-bar::after{
+    content:"";
+    position:absolute;
+    top:0; left:-100%;
+    width:60%; height:100%;
+    background:linear-gradient(90deg, transparent, rgba(255,255,255,.5), transparent);
+    animation:barShimmer 1.6s ease-in-out infinite;
+}
+
+@keyframes barShimmer{
+    from{ left:-60%; }
+    to  { left:160%; }
+}
+
+.load-percent{
+    font-size:11px;
+    color:rgba(255,255,255,.35);
+    letter-spacing:2px;
+    margin-bottom:8px;
+    font-variant-numeric:tabular-nums;
 }
 
 /* ── Galaxy canvas ── */

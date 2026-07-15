@@ -89,3 +89,47 @@
     .loading-content h1 { font-size: 42px; }
 
 }
+
+/* ==========================================================
+   TOUCH ACTIVE FEEDBACK
+========================================================== */
+
+@media (hover: none) {
+
+    .music-card:active{
+        transform:scale(.97);
+        transition:transform .15s;
+    }
+
+    .song-item:active{
+        transform:scale(.97);
+        background:rgba(139,92,246,.15);
+    }
+
+    button:active{
+        transform:scale(.96) !important;
+    }
+
+    /* No sticky hover on touch */
+    .music-card:hover{ transform:none; }
+    .song-item:hover { transform:none; }
+
+}
+
+/* ==========================================================
+   SAFE AREA INSETS (iPhone notch / home bar)
+========================================================== */
+
+#nowPlayingBar{
+    bottom:calc(24px + env(safe-area-inset-bottom));
+    right:calc(24px + env(safe-area-inset-right));
+}
+
+.letter-back-wrap{
+    padding-bottom:calc(30px + env(safe-area-inset-bottom));
+}
+
+#globalNav{
+    top:calc(20px + env(safe-area-inset-top));
+    left:calc(20px + env(safe-area-inset-left));
+}

@@ -70,13 +70,26 @@ function startLoadingAnimation() {
 
     // Animate progress bar over 5 seconds
     const bar = document.getElementById("loadBar");
+
+    // Add percentage counter above bar
+    const barWrap = document.querySelector(".load-bar-wrap");
+    let percentEl = document.querySelector(".load-percent");
+    if (!percentEl && barWrap) {
+        percentEl = document.createElement("p");
+        percentEl.className = "load-percent";
+        percentEl.textContent = "0%";
+        barWrap.parentNode.insertBefore(percentEl, barWrap);
+    }
+
     let progress = 0;
 
     const barTimer = setInterval(() => {
 
         progress += 100 / (5000 / 80);
+        const pct = Math.min(Math.floor(progress), 98);
 
-        if (bar) bar.style.width = Math.min(progress, 98) + "%";
+        if (bar) bar.style.width = pct + "%";
+        if (percentEl) percentEl.textContent = pct + "%";
 
         if (progress >= 98) clearInterval(barTimer);
 
@@ -94,15 +107,26 @@ function startLoadingAnimation() {
 function leaveLoadingScreen() {
 
     const bar = document.getElementById("loadBar");
-
     if (bar) bar.style.width = "100%";
+    const percentEl = document.querySelector(".load-percent");
+    if (percentEl) percentEl.textContent = "100%";
+
+    gsap.to("#loadingScreen .loading-content", {
+        opacity: 0, y: -20,
+        duration: 0.6, ease: "power2.in"
+    });
 
     gsap.to("#loadingScreen", {
         opacity: 0,
-        duration: 1.4,
+        duration: 1,
+        delay: 0.4,
         ease: "power2.inOut",
         onComplete: () => {
-            // Clean up particle nodes to free memory
+            const loadScreen = document.getElementById("loadingScreen");
+            if (loadScreen) {
+                loadScreen.classList.remove("active");
+                loadScreen.style.display = "none";
+            }
             const container = document.getElementById("loadParticles");
             if (container) container.innerHTML = "";
             Scenes.show("nameScreen");

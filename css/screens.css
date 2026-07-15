@@ -19,6 +19,23 @@
     text-shadow:
         0 0 30px rgba(255,255,255,.25),
         0 0 80px rgba(139,92,246,.2);
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    align-items:center;
+    gap:0 12px;
+}
+
+/* Word fade-in units */
+.story-word{
+    display:inline-block;
+    opacity:0;
+    transform:translateY(18px);
+    animation:wordReveal .55s cubic-bezier(.22,1,.36,1) forwards;
+}
+
+@keyframes wordReveal{
+    to{ opacity:1; transform:translateY(0); }
 }
 
 #storyNextBtn{ margin-top:40px; }
@@ -37,6 +54,8 @@
     cursor:pointer;
     filter:drop-shadow(0 0 40px rgba(139,92,246,.5));
     transition:filter .4s;
+    will-change:transform;
+    transform:translateZ(0);
 }
 
 #portal:hover{
@@ -50,6 +69,7 @@
     border:2px solid rgba(255,255,255,.25);
     animation:portalRotate 12s linear infinite;
     will-change:transform;
+    transform:translateZ(0);
 }
 
 .ring2{
@@ -74,7 +94,7 @@
     background:radial-gradient(circle, #fff 0%, #c4b5fd 30%, #8B5CF6 65%, transparent 100%);
     left:50%;
     top:50%;
-    transform:translate(-50%,-50%);
+    transform:translate(-50%,-50%) translateZ(0);
     box-shadow:
         0 0 50px #8B5CF6,
         0 0 120px rgba(255,77,141,.6),
@@ -339,13 +359,23 @@
 .letter-corner.br::before{ bottom:2px;  right:2px; }
 .letter-corner.br::after{  bottom:22px; right:20px; transform:scale(-1); }
 
-/* Scrollable content area */
+/* Ink bleed reveal on letter open */
 .letter-body{
     flex:1;
     overflow-y:auto;
     padding:55px 55px 40px;
     position:relative;
     z-index:2;
+}
+
+#letterContent, #apologyContent{
+    animation:inkBleed .8s ease forwards;
+    clip-path:inset(0 0 100% 0);
+}
+
+@keyframes inkBleed{
+    from{ clip-path:inset(0 0 100% 0); opacity:.4; }
+    to  { clip-path:inset(0 0 0% 0);   opacity:1;  }
 }
 
 .letter-body::before{
@@ -528,3 +558,38 @@
     border-radius:20px;
     box-shadow:0 0 80px rgba(255,255,255,.2);
 }
+
+/* ==========================================================
+   PORTAL ORBITING DOTS
+========================================================== */
+
+.portal-orbit{
+    position:absolute;
+    top:50%; left:50%;
+    width:230px; height:230px;
+    margin:-115px 0 0 -115px;
+    border-radius:50%;
+    animation:portalRotate 6s linear infinite;
+}
+
+.portal-orbit.o2{ width:200px; height:200px; margin:-100px 0 0 -100px; animation-duration:9s;  animation-direction:reverse; }
+.portal-orbit.o3{ width:260px; height:260px; margin:-130px 0 0 -130px; animation-duration:7s;  }
+.portal-orbit.o4{ width:180px; height:180px; margin:-90px  0 0 -90px;  animation-duration:11s; animation-direction:reverse; }
+.portal-orbit.o5{ width:245px; height:245px; margin:-122px 0 0 -122px; animation-duration:8s;  }
+.portal-orbit.o6{ width:215px; height:215px; margin:-107px 0 0 -107px; animation-duration:13s; animation-direction:reverse; }
+
+.portal-orb{
+    position:absolute;
+    top:0; left:50%;
+    transform:translateX(-50%);
+    width:7px; height:7px;
+    border-radius:50%;
+    background:#fff;
+    box-shadow:0 0 8px #8B5CF6, 0 0 18px rgba(139,92,246,.6);
+}
+
+.portal-orbit.o2 .portal-orb{ background:#FF4D8D; box-shadow:0 0 8px #FF4D8D, 0 0 18px rgba(255,77,141,.6); width:5px; height:5px; }
+.portal-orbit.o3 .portal-orb{ background:#FFD166; box-shadow:0 0 8px #FFD166, 0 0 18px rgba(255,209,102,.6); width:6px; height:6px; }
+.portal-orbit.o4 .portal-orb{ background:#a5f3fc; box-shadow:0 0 8px #a5f3fc, 0 0 18px rgba(165,243,252,.6); width:4px; height:4px; }
+.portal-orbit.o5 .portal-orb{ background:#c4b5fd; box-shadow:0 0 8px #c4b5fd, 0 0 18px rgba(196,181,253,.6); width:5px; height:5px; }
+.portal-orbit.o6 .portal-orb{ background:#ff9de2; box-shadow:0 0 8px #ff9de2, 0 0 18px rgba(255,157,226,.6); width:4px; height:4px; }

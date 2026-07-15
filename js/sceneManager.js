@@ -58,50 +58,46 @@ class SceneManager {
     async show(id) {
 
         if (!this.scenes[id]) {
-
             console.error(id + " doesn't exist.");
-
             return;
-
         }
+
+        // Kill any running GSAP tweens on all scenes to prevent conflicts
+        Object.values(this.scenes).forEach(s => gsap.killTweensOf(s));
 
         this.hideAll();
 
         const scene = this.scenes[id];
-
         scene.classList.add("active");
-
         this.current = id;
-
         this.history.push(id);
 
+        // Reset GSAP inline styles that may linger from previous animations
+        gsap.set(scene, { clearProps: "filter,transform,opacity" });
+
+        // Premium flash wipe between screens
+        let flash = document.getElementById("sceneFlash");
+        if (!flash) {
+            flash = document.createElement("div");
+            flash.id = "sceneFlash";
+            flash.style.cssText = "position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(139,92,246,.18);pointer-events:none;z-index:99996;opacity:0;";
+            document.body.appendChild(flash);
+        }
+        gsap.fromTo(flash,
+            { opacity: 0.18 },
+            { opacity: 0, duration: 0.55, ease: "power2.out" }
+        );
+
         await gsap.fromTo(
-
             scene,
-
-            {
-                opacity:0,
-                y:40,
-                scale:.97
-            },
-
-            {
-                opacity:1,
-                y:0,
-                scale:1,
-                duration:1,
-                ease:"power3.out"
-            }
-
+            { opacity: 0, y: 30, scale: .98 },
+            { opacity: 1, y: 0,  scale: 1, duration: .75, ease: "power3.out" }
         );
 
         document.dispatchEvent(new CustomEvent("sceneChanged", { detail: id }));
 
-        // Show nav buttons on all screens except the first three
         const noBack = ["loadingScreen", "nameScreen", "musicScreen"];
-
         const nav = document.getElementById("globalNav");
-
         if (nav) nav.style.display = noBack.includes(id) ? "none" : "flex";
 
     }

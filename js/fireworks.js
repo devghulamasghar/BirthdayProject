@@ -9,16 +9,19 @@ function initFireworks() {
 
     const screen = document.getElementById("fireworksScreen");
 
+    const name = (Aurora.userName || "Rudaba").trim();
+
     screen.innerHTML = `
         <div class="ending-wrap">
             <div class="ending-stars" id="endingStars"></div>
             <div class="ending-content">
                 <p class="ending-from">From Ghulam Asghar, with love 💜</p>
                 <h1 class="ending-title">Happy Birthday</h1>
-                <p class="ending-name">Rudaba 🌸</p>
+                <p class="ending-name">${name} 🌸</p>
                 <p class="ending-age" id="endingAge"></p>
                 <p class="ending-msg">May every day of your life be as beautiful as you are.<br>This little world was built just for you —<br>because you deserve the whole universe. 🌌</p>
                 <p class="ending-dua">اللہ تمہیں ہمیشہ خوش رکھے ❤️</p>
+                <p class="ending-countdown" id="endingCountdown"></p>
 
                 <div class="ending-portal-section">
                     <p class="ending-portal-invite">A world of love awaits you...</p>
@@ -62,6 +65,20 @@ function initFireworks() {
     const age = new Date().getFullYear() - birthYear;
     const ageEl = document.getElementById("endingAge");
     if (ageEl) ageEl.textContent = `✦ Turning ${age} today ✦`;
+
+    // Next birthday countdown
+    const countdownEl = document.getElementById("endingCountdown");
+    if (countdownEl) {
+        const now        = new Date();
+        const birthMonth = 0; // ← change to Rudaba's birth month (0 = Jan)
+        const birthDay   = 1; // ← change to Rudaba's birth day
+        let next = new Date(now.getFullYear(), birthMonth, birthDay);
+        if (next <= now) next.setFullYear(next.getFullYear() + 1);
+        const days = Math.ceil((next - now) / (1000 * 60 * 60 * 24));
+        countdownEl.textContent = days === 0
+            ? "🎂 Today is the day!"
+            : `✦ Next birthday in ${days} day${days === 1 ? "" : "s"} ✦`;
+    }
 
     // Share button
     const shareBtn = document.getElementById("endingShareBtn");

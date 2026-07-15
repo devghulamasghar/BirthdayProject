@@ -174,8 +174,10 @@ function startWorldCanvas() {
 
     let animId;
 
-    // Stop loop when screen changes to free memory
-    document.addEventListener("sceneChanged", () => { cancelAnimationFrame(animId); }, { once: true });
+    // Stop loop when screen changes away from worldScreen
+    document.addEventListener("sceneChanged", (e) => {
+        if (e.detail !== "worldScreen") cancelAnimationFrame(animId);
+    }, { once: true });
 
     (function draw() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -214,7 +216,9 @@ function startAurora() {
     let t = 0;
     let auroraAnimId;
 
-    document.addEventListener("sceneChanged", () => cancelAnimationFrame(auroraAnimId), { once: true });
+    document.addEventListener("sceneChanged", (e) => {
+        if (e.detail !== "worldScreen") cancelAnimationFrame(auroraAnimId);
+    }, { once: true });
 
     (function draw() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);

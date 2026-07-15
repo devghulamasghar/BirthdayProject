@@ -64,9 +64,9 @@ const CONFIG = {
 
         "Every star in this sky holds a wish...",
 
-        "Tonight, one of those wishes belongs to you.",
+        "Tonight, one of those wishes belongs to you, {name}.",
 
-        "Happy Birthday Rudaba ❤️",
+        "Happy Birthday {name} ❤️",
 
         "This little universe wasn't bought...",
 
